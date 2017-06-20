@@ -20,21 +20,80 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <!-- three.js container -->
+    <input id="userImage" type="file" />
+    <div id="container"></div>
+    <script type="x-shader/x-vertex" id="vertexShader">
+        varying vec2 vUv;
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        void main() {
+            vUv = uv;
+            gl_Position = vec4(uv * 2. - vec2(1, 1), 0., 1.);
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentShader">
+        precision highp float;
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        varying vec2 vUv;
+        uniform sampler2D texture1;
+        void main() {
+            gl_FragColor = texture2D(texture1, vUv.xy);
+        }
+    </script>
+    <script>
+    $("#userImage").change(function () {
+        var image = document.createElement( 'img' );
+        var texture = new THREE.Texture( image );
+        image.onload = function()  {
+            texture.needsUpdate = true;
+        };
+
+        userImage = $("#userImage")[0];
+        if (userImage.files && userImage.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                image.src = e.target.result;
+            };
+
+            reader.readAsDataURL(userImage.files[0]);
+        }
+
+        camera = new THREE.OrthographicCamera();
+        renderer = new THREE.WebGLRenderer({
+            antialias: false
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        shader = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('vertexShader').textContent,
+            fragmentShader: document.getElementById('fragmentShader').textContent,
+            uniforms: {
+                texture1: {
+                    type: "t",
+                    value: texture
+                }
+            }
+        });
+        scene = new THREE.Scene();
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(1), shader));
+
+        $('#container').append(renderer.domElement);
+        animate();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            renderer.render(scene, camera);
+        }
+    });
+
+    </script>
   </body>
 </html>
