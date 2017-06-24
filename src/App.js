@@ -1,18 +1,50 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+
+import ImageUploader from './ImageUploader';
+import Canvas from './Canvas';
+
+import DEFAULT_IMAGE_SRC from './assets/woman.jpg';
+
+const CanvasHolder = styled.div`
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const ImageUploaderHolder = styled.div`
+  position: relative;
+  z-index: 2;
+  background: #FFF;
+  padding: 1rem;
+`;
 
 class App extends Component {
+  state = {
+    image: null,
+  }
+
+  handleImageChange = (image) => {
+    this.setState({ image })
+  }
+
   render() {
+    const {image} = this.state;
+
+    console.log('Render image', image)
+
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <ImageUploaderHolder>
+          <ImageUploader handleImageChange={this.handleImageChange} />
+        </ImageUploaderHolder>
+
+        <CanvasHolder>
+          <Canvas image={image} defaultImageSrc={DEFAULT_IMAGE_SRC} />
+        </CanvasHolder>
       </div>
     );
   }
