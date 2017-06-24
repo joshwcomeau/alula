@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ImageUploader from './ImageUploader';
 import Canvas from './Canvas';
 
-import DEFAULT_IMAGE_SRC from './assets/woman.jpg';
+import DEFAULT_IMAGE_SRC from './assets/plant.jpg';
 
 const CanvasHolder = styled.div`
   position: fixed;
