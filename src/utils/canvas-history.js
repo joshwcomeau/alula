@@ -1,3 +1,5 @@
+import {getPixelRatio} from './canvas-utils';
+
 export default function createCanvasHistory() {
   const states = [];
 
@@ -23,9 +25,16 @@ export default function createCanvasHistory() {
       console.log('Saving', currentStateIndex);
     },
 
-    restore(ctx) {
-      console.log('Restoring', ctx)
-      ctx.drawImage(states[currentStateIndex], 0, 0);
+    restore(canvas, ctx) {
+      const pixelRatio = getPixelRatio(ctx);
+
+      ctx.drawImage(
+        states[currentStateIndex],
+        0,
+        0,
+        canvas.width / pixelRatio,
+        canvas.height / pixelRatio
+      );
     },
   };
 
