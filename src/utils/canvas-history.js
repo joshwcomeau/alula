@@ -5,8 +5,6 @@ export default function createCanvasHistory() {
 
   let currentStateIndex = 0;
 
-  const placeholderImage = new Image();
-
   return {
     save(canvas) {
       //create a new canvas
@@ -37,5 +35,4 @@ export default function createCanvasHistory() {
       );
     },
   };
-
 }
