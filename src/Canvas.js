@@ -165,31 +165,22 @@ class Canvas extends PureComponent {
     const offset = y1 - (slope * x1);
 
     // Now that we have this data, extend our line to span the entire canvas.
-    const originX1 = 0;
-    const originY1 = offset;
-    const originX2 = this.canvas.width;
-    const originY2 = slope * this.canvas.width + offset;
+    const originLine = {
+      x1: 0,
+      y1: offset,
+      x2: this.canvas.width,
+      y2: slope * this.canvas.width + offset,
+    };
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(originX1, originY1);
-    this.ctx.lineTo(originX2, originY2);
-    this.ctx.stroke();
-    //
-    //
-    // const line = {
-    //   x1,
-    //   y1,
-    //   x2: ev.clientX,
-    //   y2: ev.clientY,
-    // };
-    //
-    // mirrorTransformLine(line, this.ctx);
+    this.ctx.save();
+
+
+    mirrorTransformLine(originLine, this.ctx);
 
 
     // // Let's draw our newly-rotated image!
     // // save the unrotated context of the canvas so we can restore it later
     // // the alternative is to untranslate & unrotate after drawing
-    // this.ctx.save();
     //
     // // move to the center of the canvas
     // this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
@@ -204,7 +195,13 @@ class Canvas extends PureComponent {
     // // rotate the canvas to the specified degrees
     // this.ctx.rotate(theta);
 
-
+    // Create a path that only covers the reflected part of the line.
+    this.ctx.beginPath();
+    this.ctx.moveTo(originLine.x1, originLine.y1);
+    this.ctx.lineTo(originLine.x2, originLine.y2);
+    this.ctx.lineTo(this.canvas.width, 0);
+    this.ctx.lineTo(0, 0);
+    this.ctx.clip();
 
     // draw the image
     // since the this.ctx is rotated, the image will be rotated also
@@ -216,6 +213,8 @@ class Canvas extends PureComponent {
 
     // we’re done with the rotating so restore the unrotated this.ctx
     this.ctx.setTransform(1,0,0,1,0,0);
+
+    this.ctx.restore();
   }
 
 
