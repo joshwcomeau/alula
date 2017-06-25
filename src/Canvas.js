@@ -2,12 +2,16 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import debounce from 'lodash';
 
+import createCanvasHistory from './utils/canvas-history';
+
+
 const CanvasElem = styled.canvas`
   position: relative;
   width: 100%;
   height: 100%;
   background: #CCC;
 `;
+
 
 function mirrorTransformLine(line, ctx){
   let {x1, y1, x2, y2} = line;
@@ -75,6 +79,10 @@ class Canvas extends PureComponent {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    // Items are added to the history when the mouse is released,
+    // since that "officially" sets the state.
+    this.history = createCanvasHistory();
+
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -117,17 +125,33 @@ class Canvas extends PureComponent {
       this.scaleWidth,
       this.scaleHeight
     );
+
+    // Push this onto the history.
+    this.history.save(this.canvas);
   }
 
   startDrag = (ev) => {
     this.x1 = ev.clientX;
     this.y1 = ev.clientY;
+
+    this.isDragging = true;
   }
 
-  releaseDrag = (ev) => {
+  handleDrag = (ev) => {
+    if (!this.isDragging) {
+      return;
+    }
+
+    this.history.restore(this.ctx);
+
     const {x1, y1} = this;
-    const {clientX: x2, clientY: y2} = ev;
     const {image} = this.props;
+    const {clientX: x2, clientY: y2} = ev;
+
+    // At the start of each move event, restore the canvas to the previously
+    // saved state. This is necessary because each move updates the canvas
+    // as a 'preview'. The state isn't saved until the drag is released.
+    // this.history.restore(this.canvas, this.ctx);
 
     // Trigonometry time!
     // We started the drag at point (x1, y1), and have released at (x2, y2).
@@ -150,7 +174,6 @@ class Canvas extends PureComponent {
 
     const theta = Math.atan(sideB / sideA);
 
-
     // Extend our line so that it reaches the edge of the canvas.
     // Given that this is just a straight line, it can be represented by
     // the simple equation `y = ax + b`.
@@ -171,9 +194,7 @@ class Canvas extends PureComponent {
 
     this.ctx.save();
 
-
     mirrorTransformLine(originLine, this.ctx);
-
 
     // // Let's draw our newly-rotated image!
     // // save the unrotated context of the canvas so we can restore it later
@@ -214,6 +235,12 @@ class Canvas extends PureComponent {
     this.ctx.restore();
   }
 
+  releaseDrag = (ev) => {
+    this.isDragging = false;
+
+    this.history.save(this.canvas);
+  }
+
 
   storeRefToCanvas = (canvas) => {
     this.canvas = canvas;
@@ -225,6 +252,7 @@ class Canvas extends PureComponent {
       <CanvasElem
         innerRef={this.storeRefToCanvas}
         onMouseDown={this.startDrag}
+        onMouseMove={this.handleDrag}
         onMouseUp={this.releaseDrag}
       />
     );
