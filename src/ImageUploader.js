@@ -3,66 +3,33 @@ import React, {PureComponent} from 'react';
 
 class ImageUploader extends PureComponent {
   componentDidMount() {
-    this.image = document.createElement('img');
-
-    this.image.onload = () => {
-      this.props.handleImageChange(this.image)
-    }
+    this.processImage(this.props.defaultImageSrc);
   }
 
-  handleUpload = (ev, ...args) => {
-    const [selectedFile] = ev.target.files;
-
+  handleUpload = (file) => {
     const reader = new FileReader();
     reader.onload = ev => {
-      this.image.src = ev.target.result
+      this.processImage(ev.target.result);
     };
 
-    reader.readAsDataURL(selectedFile);
-
-    //
-    // userImage = $("#userImage")[0];
-    // if (userImage.files && userImage.files[0]) {
-    //     var reader = new FileReader();
-    //
-    //     reader.onload = function (e) {
-    //         image.src = e.target.result;
-    //     };
-    //
-    //     reader.readAsDataURL(userImage.files[0]);
-    // }
-    //
-    // camera = new THREE.OrthographicCamera();
-    // renderer = new THREE.WebGLRenderer({
-    //     antialias: false
-    // });
-    // renderer.setSize(window.innerWidth, window.innerHeight);
-    // shader = new THREE.ShaderMaterial({
-    //     vertexShader: document.getElementById('vertexShader').textContent,
-    //     fragmentShader: document.getElementById('fragmentShader').textContent,
-    //     uniforms: {
-    //         texture1: {
-    //             type: "t",
-    //             value: texture
-    //         }
-    //     }
-    // });
-    // scene = new THREE.Scene();
-    // scene.add(new THREE.Mesh(new THREE.PlaneGeometry(1), shader));
-    //
-    // $('#container').append(renderer.domElement);
-    // animate();
-    //
-    // function animate() {
-    //     requestAnimationFrame(animate);
-    //
-    //     renderer.render(scene, camera);
-    // }
+    reader.readAsDataURL(file);
   }
+
+  processImage = src => {
+    const image = document.createElement('img');
+
+    image.onload = () => this.props.handleImageChange(image);
+
+    image.src = src;
+  }
+
   render() {
     return (
       <div>
-        <input type="file" onChange={this.handleUpload} />
+        <input
+          type="file"
+          onChange={ev => this.handleUpload(ev.target.files[0])}
+        />
       </div>
     )
   }

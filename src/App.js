@@ -37,11 +37,14 @@ class App extends Component {
     return (
       <div>
         <ImageUploaderHolder>
-          <ImageUploader handleImageChange={this.handleImageChange} />
+          <ImageUploader
+            defaultImageSrc={DEFAULT_IMAGE_SRC}
+            handleImageChange={this.handleImageChange}
+          />
         </ImageUploaderHolder>
 
         <CanvasHolder>
-          <Canvas image={image} defaultImageSrc={DEFAULT_IMAGE_SRC} />
+          <Canvas image={image} />
         </CanvasHolder>
       </div>
     );

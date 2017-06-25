@@ -79,8 +79,6 @@ export function mirrorTransformLine(line){
   var dx = u * len; // get the x dist of the mirrored origin
   var dy = Math.hypot(x1 + x * u, y1 + y * u); // get the mirrored y axis distance from line
 
-  console.log({ u, dx, dy })
-
   // the above code does not account for the direction of the origin. We don't know if its above or below the line
   // we can get the cross product of the mirror line and the vector to the origin. This will give us the sign (direction) to the origin
   dy *=  Math.sign(ox * y - oy * x); // flip the y distance if needed

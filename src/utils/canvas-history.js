@@ -20,7 +20,6 @@ export default function createCanvasHistory() {
 
       states.push(newCanvas);
       currentStateIndex = states.length - 1;
-      console.log('Saving', currentStateIndex);
     },
 
     restore(canvas, ctx) {

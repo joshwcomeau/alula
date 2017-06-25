@@ -31,6 +31,10 @@ class Canvas extends PureComponent {
     this.history = createCanvasHistory();
 
     window.addEventListener('resize', this.handleResize);
+
+    var img = new Image();
+    img.onload = this.updateImage(img);
+    img.src = this.props.defaultImageSrc;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -115,8 +119,6 @@ class Canvas extends PureComponent {
     };
 
     this.ctx.save();
-
-    console.log('params', mirrorTransformLine(originLine))
 
     this.ctx.setTransform(...mirrorTransformLine(originLine));
 
