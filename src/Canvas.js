@@ -89,7 +89,6 @@ class Canvas extends PureComponent {
   }
 
   handleResize = () => {
-    console.log('Debouncing')
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.updateImage(this.props.image);
@@ -110,8 +109,6 @@ class Canvas extends PureComponent {
       const amountCropped = this.scaleWidth - this.canvas.width;
       this.offset = {x: -amountCropped / 2, y: 0};
     }
-
-    console.log(image, this.canvas.width, this.canvas.height)
 
     this.ctx.drawImage(
       image,

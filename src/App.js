@@ -34,8 +34,6 @@ class App extends Component {
   render() {
     const {image} = this.state;
 
-    console.log('Render image', image)
-
     return (
       <div>
         <ImageUploaderHolder>
