@@ -19,8 +19,10 @@ const CanvasElem = styled.canvas`
 
 class Canvas extends PureComponent {
   componentDidMount() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    const size = Math.min(window.innerWidth, window.innerHeight);
+
+    this.canvas.width = size;
+    this.canvas.height = size;
 
     this.pixelRatio = getPixelRatio(this.ctx);
 
@@ -31,10 +33,6 @@ class Canvas extends PureComponent {
     this.history = createCanvasHistory();
 
     window.addEventListener('resize', this.handleResize);
-
-    var img = new Image();
-    img.onload = this.updateImage(img);
-    img.src = this.props.defaultImageSrc;
   }
 
   componentWillReceiveProps(nextProps) {
