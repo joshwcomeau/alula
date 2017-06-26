@@ -19,19 +19,13 @@ const CanvasElem = styled.canvas`
 
 class Canvas extends PureComponent {
   componentDidMount() {
-    const size = Math.min(window.innerWidth, window.innerHeight);
-
-    this.canvas.width = size;
-    this.canvas.height = size;
-
-    this.pixelRatio = getPixelRatio(this.ctx);
-
-    scaleCanvas(this.canvas, this.ctx);
-
     // Items are added to the history when the mouse is released,
     // since that "officially" sets the state.
     this.history = createCanvasHistory();
 
+    this.ctx.imageSmoothingEnabled = false;
+
+    this.handleResize();
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -46,12 +40,18 @@ class Canvas extends PureComponent {
   }
 
   handleResize = () => {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    const size = Math.min(window.innerWidth, window.innerHeight);
+
+    this.canvas.width = size;
+    this.canvas.height = size;
+
+    this.pixelRatio = getPixelRatio(this.ctx);
 
     scaleCanvas(this.canvas, this.ctx);
 
-    this.updateImage(this.props.image);
+    if (this.props.image) {
+      this.updateImage(this.props.image);
+    }
   }
 
   updateImage = (image) => {
@@ -75,9 +75,22 @@ class Canvas extends PureComponent {
     this.history.save(this.canvas);
   }
 
+  getEventCoords = (ev) => {
+    // This method normalizes the difference between touch events and mouse
+    // events, to return a set of X/Y coordinates for an event regardess
+    // of input device.
+    const coordHolder = ev.touches ? ev.touches[0] : ev;
+
+    return {
+      x: coordHolder.clientX,
+      y: coordHolder.clientY
+    }
+  }
+
   startDrag = (ev) => {
-    this.x1 = ev.clientX;
-    this.y1 = ev.clientY;
+    const {x: x1, y: y1} = this.getEventCoords(ev);
+    this.x1 = x1;
+    this.y1 = y1;
 
     this.isDragging = true;
   }
@@ -93,7 +106,7 @@ class Canvas extends PureComponent {
     this.history.restore(this.canvas, this.ctx);
 
     const {x1, y1} = this;
-    const {clientX: x2, clientY: y2} = ev;
+    const {x: x2, y: y2} = this.getEventCoords(ev);
 
     const sideA = x2 - x1;
     const sideB = y2 - y1;
@@ -121,12 +134,80 @@ class Canvas extends PureComponent {
     this.ctx.setTransform(...mirrorTransformLine(originLine));
 
     // Create a path that only covers the reflected part of the line.
-    this.ctx.beginPath();
-    this.ctx.moveTo(originLine.x1, originLine.y1);
-    this.ctx.lineTo(originLine.x2, originLine.y2);
-    this.ctx.lineTo(this.canvas.width, 0);
-    this.ctx.lineTo(0, 0);
-    this.ctx.clip();
+    // This is a surprisingly tricky thing, since the "side" we want to clip
+    // depends on the current line's two points (we generally want to reflect
+    // over the smaller of the two sides bisected by this line).
+    //
+    // First, figure out which direction is shorter, clockwise or counter-cw.
+    function calculatePerimeter(args) {
+      const {originalPoint, currentPoint, direction, size, sum = 0} = args;
+
+      // Are we on the same axis as our final point?
+      if (direction === 'ccw') {
+        if (
+          currentPoint.x === 0 && currentPoint.y === 0 &&
+          originalPoint.x === 0
+        ) {
+          return sum + originalPoint.y;
+        }
+
+        if (
+          currentPoint.x === 0 && currentPoint.y === size &&
+          originalPoint.y === size
+        ) {
+          return sum + originalPoint.x;
+        }
+
+        if (
+          currentPoint.x === size && currentPoint.y === 0 &&
+          originalPoint.y === 0
+        ) {
+          return sum + (size - originalPoint.x);
+        }
+      } else {
+        if (
+          currentPoint.x === 0 && currentPoint.y === size &&
+          originalPoint.x === 0
+        ) {
+          return sum + (size - originalPoint.y);
+        }
+
+        if (
+          currentPoint.x === size && currentPoint.y === size &&
+          originalPoint.y === size
+        ) {
+          return sum + (size - originalPoint.x);
+        }
+
+        if (
+          currentPoint.x === 0 && currentPoint.y === 0 &&
+          originalPoint.y === 0
+        ) {
+          return sum + originalPoint.x;
+        }
+      }
+
+      // If not, add the size to our sum, and move the currentPoint to
+      // the next corner.
+      const corners = [
+        { x: 0, y: 0 },
+        { x: size, y: 0 },
+        { x: size, y: size },
+        { x: 0, y: size },
+      ];
+
+      return calculatePerimeter({
+        ...args,
+      })
+    }
+
+    // this.ctx.beginPath();
+    // this.ctx.moveTo(originLine.x1, originLine.y1);
+    // this.ctx.lineTo(originLine.x2, originLine.y2);
+    // this.ctx.lineTo(this.canvas.width, 0);
+    // this.ctx.lineTo(0, 0);
+    //
+    // this.ctx.clip();
 
     // draw the image
     // since the this.ctx is rotated, the image will be rotated also
@@ -146,6 +227,8 @@ class Canvas extends PureComponent {
     this.isDragging = false;
 
     this.history.save(this.canvas);
+
+    console.log('Release drag');
   }
 
   storeRefToCanvas = (canvas) => {
@@ -160,6 +243,9 @@ class Canvas extends PureComponent {
         onMouseDown={this.startDrag}
         onMouseMove={this.handleDrag}
         onMouseUp={this.releaseDrag}
+        onTouchStart={this.startDrag}
+        onTouchMove={this.handleDrag}
+        onTouchEnd={this.releaseDrag}
       />
     );
   }
