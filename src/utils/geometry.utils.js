@@ -49,6 +49,19 @@ export const rotatePointCW = (point, size) => {
   return rotationMultipliers[edge](point);
 }
 
+export const rotatePointCCW = (point, size) => {
+  const edge = getEdgeForPoint(point, size);
+
+  const rotationMultipliers = {
+    top: ({x, y}) => ({x: 0, y: size - x}),
+    left: ({x, y}) => ({x: y, y: size}),
+    right: ({x, y}) => ({x: y, y: size - x}),
+    bottom: ({x, y}) => ({x: size, y: size - x}),
+  }
+
+  return rotationMultipliers[edge](point);
+}
+
 const rotatePoint = direction => (point, size) => {
   const edge = getEdgeForPoint(point);
 
