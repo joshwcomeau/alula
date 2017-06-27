@@ -119,23 +119,21 @@ class Canvas extends PureComponent {
     // If our line is perfectly vertical, the standard `ax + b` form won't
     // work. In this case, though, our job is easy.
     if (sideA === 0) {
+      const x = x1;
+
       fullLine = {
-        x1: x1 * this.pixelRatio,
+        x: x1 * this.pixelRatio,
         y1: 0,
-        x2: x2 * this.pixelRatio,
         y2: this.canvas.height,
       };
 
-      console.log('Setting transform')
-      this.ctx.translate(this.canvas.width / this.pixelRatio, 0);
-      this.ctx.scale(-1 / this.pixelRatio, 1 / this.pixelRatio);
+      this.ctx.setTransform(-1, 0, 0, 1, x * this.pixelRatio * 2, 0)
 
       this.ctx.beginPath();
-      this.ctx.moveTo(this.canvas.width - fullLine.x1, 0);
-      this.ctx.lineTo(this.canvas.width - fullLine.x2, this.canvas.height);
-      this.ctx.lineTo(0, this.canvas.height);
-      this.ctx.lineTo(0, 0);
-      this.ctx.lineTo(this.canvas.width - fullLine.x1, 0);
+      this.ctx.moveTo(fullLine.x, 0);
+      this.ctx.lineTo(fullLine.x, this.canvas.height);
+      this.ctx.lineTo(this.canvas.width, this.canvas.height);
+      this.ctx.lineTo(this.canvas.width, 0);
     } else {
       // Extend our line so that it reaches the edge of the canvas.
       // Given that this is just a straight line, it can be represented by
