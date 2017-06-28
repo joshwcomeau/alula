@@ -1,10 +1,40 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import {media} from './constants';
+
 import ImageUploader from './ImageUploader';
+import TopControls from './TopControls';
+import BottomControls from './BottomControls';
 import Canvas from './Canvas';
 
 import DEFAULT_IMAGE_SRC from './assets/plant.jpg';
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const FullHeight = styled.div`
+  height: 100%;
+`;
+
+const LandscapeOnly = styled.div`
+  ${media.portrait`
+    display: none;
+  `}
+`;
+
+const PortraitOnly = styled.div`
+  ${media.landscape`
+    display: none;
+  `}
+`;
 
 const CanvasHolder = styled.div`
   position: fixed;
@@ -31,24 +61,52 @@ class App extends Component {
     this.setState({ image })
   }
 
-  render() {
+  renderPortrait() {
     const {image} = this.state;
 
     return (
-      <div>
-        <ImageUploaderHolder>
-          <ImageUploader
-            defaultImageSrc={DEFAULT_IMAGE_SRC}
-            handleImageChange={this.handleImageChange}
-          />
-        </ImageUploaderHolder>
-
-        <CanvasHolder>
+      <PortraitOnly style={{ height: '100%' }}>
+        <Column style={{ minHeight: '100%' }}>
+          <TopControls />
           <Canvas image={image} />
-        </CanvasHolder>
-      </div>
+          <BottomControls />
+        </Column>
+      </PortraitOnly>
+    )
+  }
+
+  renderLandscape() {
+    const {image} = this.state;
+
+    return (
+      <LandscapeOnly>
+        <Row>
+          <Canvas image={image} />
+          <Column style={{ flex: 1 }}>
+            <TopControls />
+            <BottomControls style={{ flex: 1 }}/>
+          </Column>
+        </Row>
+      </LandscapeOnly>
+    )
+  }
+
+  render() {
+
+    return (
+      <FullHeight>
+        {this.renderPortrait()}
+        {this.renderLandscape()}
+      </FullHeight>
     );
   }
 }
+
+{/* <ImageUploaderHolder>
+  <ImageUploader
+    defaultImageSrc={DEFAULT_IMAGE_SRC}
+    handleImageChange={this.handleImageChange}
+  />
+</ImageUploaderHolder> */}
 
 export default App;
