@@ -72,7 +72,6 @@ export function mirrorTransformLine(line){
   var nx = x / len;  // normalise the line
   var ny = y / len;
 
-
   // We must find the mirrored origin
   // get the unit distance along the line where the mirrored y axis intercepts
   var u = (ox * x + oy * y)/(y * y + x * x);

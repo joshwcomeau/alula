@@ -89,5 +89,17 @@ const rotateLine = direction => line => {
 
 
 export function calculatePerimeter(args) {
+  // We want to figure out whether clockwise or counter-clockwise is a faster
+  // direction.
+  const {line, size, sum = 0} = args;
 
+  const startEdge = getEdgeForPoint(line.p1);
+  const endEdge = getEdgeForPoint(line.p2);
+
+  // Are the two points on the same line?
+  // if (startEdge === endEdge) {
+  //   return sum + (size - )
+  // }
+
+  function sumPerimeter
 }
