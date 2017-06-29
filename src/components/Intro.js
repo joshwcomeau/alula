@@ -13,10 +13,11 @@ class Intro extends Component {
 
   handleImageChange = () => {
     console.log('Change!');
-    this.props.history.push('/my-new-location')
+    this.props.history.push('/create')
   }
 
   render() {
+    console.log('Render intro')
     return (
       <div>
         Hello there!

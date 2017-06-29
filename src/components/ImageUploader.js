@@ -1,9 +1,22 @@
 import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+
+import {receiveNewImage} from '../actions';
 
 
-class ImageUploader extends PureComponent {
+export class ImageUploader extends PureComponent {
+  static propTypes = {
+    defaultImageSrc: PropTypes.string,
+    receiveNewImage: PropTypes.func.isRequired,
+  }
+
   componentDidMount() {
-    this.processImage(this.props.defaultImageSrc);
+    const {defaultImageSrc} = this.props;
+
+    if (defaultImageSrc) {
+      this.processImage(defaultImageSrc);
+    }
   }
 
   handleUpload = (file) => {
@@ -15,10 +28,12 @@ class ImageUploader extends PureComponent {
     reader.readAsDataURL(file);
   }
 
-  processImage = src => {
+  processImage = (src) => {
+    const {receiveNewImage} = this.props;
+
     const image = document.createElement('img');
 
-    image.onload = () => this.props.handleImageChange(image);
+    image.onload = () => receiveNewImage(image);
 
     image.src = src;
   }
@@ -35,4 +50,6 @@ class ImageUploader extends PureComponent {
   }
 }
 
-export default ImageUploader;
+const mapDispatchToProps = {receiveNewImage};
+
+export default connect(null, mapDispatchToProps)(ImageUploader);
