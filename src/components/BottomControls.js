@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import styled from 'styled-components';
 
-import {colors} from './constants';
+import {colors} from '../constants';
 
 const TopBar = styled.div`
   position: relative;
@@ -9,10 +9,11 @@ const TopBar = styled.div`
   padding: 5px 10px;
   background: ${colors.grays[4]};
   color: ${colors.grays[0]};
+  flex: 1;
 `;
 
 
-class TopControls extends PureComponent {
+class BottomControls extends PureComponent {
   handleClear() {
 
   }
@@ -24,10 +25,10 @@ class TopControls extends PureComponent {
   render() {
     return (
       <TopBar>
-        Top!
+        Bttom!
       </TopBar>
     )
   }
 }
 
-export default TopControls;
+export default BottomControls;

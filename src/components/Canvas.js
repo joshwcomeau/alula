@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-import createCanvasHistory from './utils/canvas-history';
+import createCanvasHistory from '../utils/canvas-history';
 import {
   scaleCanvas,
   getPixelRatio,
   getCroppedImageParams,
   mirrorTransformLine,
-} from './utils/canvas-utils';
+} from '../utils/canvas-utils';
 
 
 const CanvasElem = styled.canvas`

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import {media} from './constants';
+import {media} from '../constants';
+import DEFAULT_IMAGE_SRC from '../assets/plant.jpg';
 
 import ImageUploader from './ImageUploader';
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
 import Canvas from './Canvas';
 
-import DEFAULT_IMAGE_SRC from './assets/plant.jpg';
 
 const Column = styled.div`
   display: flex;
