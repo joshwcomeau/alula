@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
+import { routerMiddleware } from 'react-router-redux'
 
 import rootReducer from '../reducers';
-import createRouterMiddleware from '../middlewares/router.middleware.js';
 
 
 export default function configureStore(history) {
@@ -9,6 +9,6 @@ export default function configureStore(history) {
 
   return createStore(
     rootReducer,
-    applyMiddleware(routerMiddleware)
+    applyMiddleware(routerMiddleware(history))
   );
 }

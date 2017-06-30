@@ -1,14 +1,16 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import { push } from 'react-router-redux'
 import PropTypes from 'prop-types';
 
 import {receiveNewImage} from '../actions';
-
+import {readAsDataURL, loadImage} from '../utils/image.utils.js'
 
 export class ImageUploader extends PureComponent {
   static propTypes = {
     defaultImageSrc: PropTypes.string,
     receiveNewImage: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -20,22 +22,16 @@ export class ImageUploader extends PureComponent {
   }
 
   handleUpload = (file) => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      this.processImage(ev.target.result);
-    };
-
-    reader.readAsDataURL(file);
+    readAsDataURL(file).then(this.processImage);
   }
 
   processImage = (src) => {
-    const {receiveNewImage} = this.props;
+    const {receiveNewImage, push} = this.props;
 
-    const image = document.createElement('img');
-
-    image.onload = () => receiveNewImage(image);
-
-    image.src = src;
+    loadImage(src).then((image) => {
+      receiveNewImage(image);
+      push('/create');
+    });
   }
 
   render() {
@@ -50,6 +46,6 @@ export class ImageUploader extends PureComponent {
   }
 }
 
-const mapDispatchToProps = {receiveNewImage};
+const mapDispatchToProps = {receiveNewImage, push};
 
 export default connect(null, mapDispatchToProps)(ImageUploader);

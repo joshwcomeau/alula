@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import styled from 'styled-components';
 import createHistory from 'history/createBrowserHistory'
 
+import { ConnectedRouter } from 'react-router-redux'
 import configureStore from '../store';
 
 import Intro from './Intro';
@@ -28,14 +29,14 @@ class App extends Component {
     console.log('Render app')
     return (
       <Provider store={store}>
-        <Router history={history}>
+        <ConnectedRouter history={history}>
           <div>
             <Route exact path="/" component={Intro} />
             <Route path="/create" component={Main} />
 
             <DevTools />
           </div>
-        </Router>
+        </ConnectedRouter>
       </Provider>
     );
   }
