@@ -7,6 +7,7 @@ import createCanvasHistory from '../utils/canvas-history';
 import {
   scaleCanvas,
   getPixelRatio,
+  getCursorPosition,
   getCroppedImageParams,
   mirrorTransformLine,
 } from '../utils/canvas-utils';
@@ -87,10 +88,7 @@ class Canvas extends PureComponent {
     // of input device.
     const coordHolder = ev.touches ? ev.touches[0] : ev;
 
-    return {
-      x: coordHolder.clientX,
-      y: coordHolder.clientY
-    }
+    return getCursorPosition(ev, this.canvas);
   }
 
   startDrag = (ev) => {

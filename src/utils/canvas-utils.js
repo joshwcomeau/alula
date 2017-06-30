@@ -27,6 +27,13 @@ export function getPixelRatio(ctx) {
   return (window.devicePixelRatio || 1) / backingStoreRatio;
 }
 
+export function getCursorPosition(event, canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  return {x, y};
+}
+
 export function getCroppedImageParams({
   canvasWidth,
   canvasHeight,
