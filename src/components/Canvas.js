@@ -25,6 +25,11 @@ class Canvas extends PureComponent {
     image: PropTypes.object,
   }
 
+  state = {
+    x: 0,
+    y: 0,
+  }
+
   componentDidMount() {
     // Items are added to the history when the mouse is released,
     // since that "officially" sets the state.
@@ -115,6 +120,8 @@ class Canvas extends PureComponent {
     const {x1, y1} = this;
     const {x: x2, y: y2} = this.getEventCoords(ev);
 
+    this.setState({ x: x2, y: y2 });
+
     const sideA = x2 - x1;
     const sideB = y2 - y1;
 
@@ -194,16 +201,20 @@ class Canvas extends PureComponent {
   }
 
   render() {
+    const {x, y} = this.state;
     return (
-      <CanvasElem
-        innerRef={this.storeRefToCanvas}
-        onMouseDown={this.startDrag}
-        onMouseMove={this.handleDrag}
-        onMouseUp={this.releaseDrag}
-        onTouchStart={this.startDrag}
-        onTouchMove={this.handleDrag}
-        onTouchEnd={this.releaseDrag}
-      />
+      <div>
+        <CanvasElem
+          innerRef={this.storeRefToCanvas}
+          onMouseDown={this.startDrag}
+          onMouseMove={this.handleDrag}
+          onMouseUp={this.releaseDrag}
+          onTouchStart={this.startDrag}
+          onTouchMove={this.handleDrag}
+          onTouchEnd={this.releaseDrag}
+        />
+        <span>{x}, {y}</span>
+      </div>
     );
   }
 }

@@ -5,8 +5,6 @@ import rootReducer from '../reducers';
 
 
 export default function configureStore(history) {
-  const routerMiddleware = createRouterMiddleware(history);
-
   return createStore(
     rootReducer,
     applyMiddleware(routerMiddleware(history))
