@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import {media} from '../constants';
-import DEFAULT_IMAGE_SRC from '../assets/plant.jpg';
 
-import ImageUploader from './ImageUploader';
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
 import Canvas from './Canvas';
@@ -36,39 +34,13 @@ const PortraitOnly = styled.div`
   `}
 `;
 
-const CanvasHolder = styled.div`
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-const ImageUploaderHolder = styled.div`
-  position: relative;
-  z-index: 2;
-  background: #FFF;
-  padding: 1rem;
-`;
-
-class App extends Component {
-  state = {
-    image: null,
-  }
-
-  handleImageChange = (image) => {
-    this.setState({ image })
-  }
-
+class Main extends Component {
   renderPortrait() {
-    const {image} = this.state;
-
     return (
       <PortraitOnly style={{ height: '100%' }}>
         <Column style={{ minHeight: '100%' }}>
           <TopControls />
-          <Canvas image={image} />
+          <Canvas />
           <BottomControls />
         </Column>
       </PortraitOnly>
@@ -76,12 +48,10 @@ class App extends Component {
   }
 
   renderLandscape() {
-    const {image} = this.state;
-
     return (
       <LandscapeOnly>
         <Row>
-          <Canvas image={image} />
+          <Canvas />
           <Column style={{ flex: 1 }}>
             <TopControls />
             <BottomControls style={{ flex: 1 }}/>
@@ -92,8 +62,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('Render main')
-
     return (
       <FullHeight>
         {this.renderPortrait()}
@@ -103,11 +71,4 @@ class App extends Component {
   }
 }
 
-{/* <ImageUploaderHolder>
-  <ImageUploader
-    defaultImageSrc={DEFAULT_IMAGE_SRC}
-    handleImageChange={this.handleImageChange}
-  />
-</ImageUploaderHolder> */}
-
-export default App;
+export default Main;

@@ -6,19 +6,12 @@ import PropTypes from 'prop-types';
 import {receiveNewImage} from '../actions';
 import {readAsDataURL, loadImage} from '../utils/image.utils.js'
 
+
 export class ImageUploader extends PureComponent {
   static propTypes = {
     defaultImageSrc: PropTypes.string,
     receiveNewImage: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-  }
-
-  componentDidMount() {
-    const {defaultImageSrc} = this.props;
-
-    if (defaultImageSrc) {
-      this.processImage(defaultImageSrc);
-    }
   }
 
   handleUpload = (file) => {
@@ -31,7 +24,7 @@ export class ImageUploader extends PureComponent {
     loadImage(src).then((image) => {
       receiveNewImage(image);
       push('/create');
-    });
+    }).catch(console.error);
   }
 
   render() {

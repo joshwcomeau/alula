@@ -4,28 +4,18 @@ import styled from 'styled-components';
 
 import ImageUploader from './ImageUploader';
 
-import DEFAULT_IMAGE_SRC from '../assets/plant.jpg';
 
 class Intro extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
   }
 
-  handleImageChange = () => {
-    console.log('Change!');
-    this.props.history.push('/create')
-  }
-
   render() {
-    console.log('Render intro')
     return (
       <div>
         Hello there!
 
-        <ImageUploader
-          defaultImageSrc={DEFAULT_IMAGE_SRC}
-          handleImageChange={this.handleImageChange}
-        />
+        <ImageUploader />
       </div>
     )
   }

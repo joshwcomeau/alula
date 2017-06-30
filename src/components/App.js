@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom'
 import {Provider} from 'react-redux';
-import styled from 'styled-components';
 import createHistory from 'history/createBrowserHistory'
 
 import { ConnectedRouter } from 'react-router-redux'
@@ -17,16 +16,24 @@ const history = createHistory();
 const store = configureStore(history);
 
 class App extends Component {
-  state = {
-    image: null,
-  }
+  // TEMP TEMP TEMP
+  // This is just to make life easier while developing.
+  // Remove this on-mount method
+  componentDidMount() {
+    const DEFAULT_IMAGE_SRC = require('../assets/plant.jpg');
+    const {receiveNewImage} = require('../actions');
+    const {loadImage} = require('../utils/image.utils.js');
 
-  handleImageChange = (image) => {
-    this.setState({ image })
+    const {push} = require('react-router-redux');
+
+    loadImage(DEFAULT_IMAGE_SRC).then((image) => {
+      store.dispatch(receiveNewImage(image));
+      store.dispatch(push('/create'));
+    }).catch(console.error);
+
   }
 
   render() {
-    console.log('Render app')
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>

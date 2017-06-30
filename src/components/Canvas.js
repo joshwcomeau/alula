@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import createCanvasHistory from '../utils/canvas-history';
@@ -18,6 +20,10 @@ const CanvasElem = styled.canvas`
 `;
 
 class Canvas extends PureComponent {
+  static propTypes = {
+    image: PropTypes.object,
+  }
+
   componentDidMount() {
     // Items are added to the history when the mouse is released,
     // since that "officially" sets the state.
@@ -182,8 +188,6 @@ class Canvas extends PureComponent {
     this.isDragging = false;
 
     this.history.save(this.canvas);
-
-    console.log('Release drag');
   }
 
   storeRefToCanvas = (canvas) => {
@@ -206,4 +210,8 @@ class Canvas extends PureComponent {
   }
 }
 
-export default Canvas;
+const mapStateToProps = state => ({
+  image: state.image,
+});
+
+export default connect(mapStateToProps)(Canvas);
