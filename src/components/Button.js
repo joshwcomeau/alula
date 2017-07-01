@@ -15,6 +15,10 @@ const Button = styled.button`
   font-weight: 400;
   background: rgba(0,0,0,0.5);
   color: ${colors.grays[2]};
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 

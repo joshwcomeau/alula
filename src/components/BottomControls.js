@@ -62,7 +62,7 @@ class BottomControls extends PureComponent {
   }
 
   render() {
-    const {undoTransformation} = this.props;
+    const {canUndo, undoTransformation} = this.props;
 
     return (
       <Section>
@@ -78,7 +78,10 @@ class BottomControls extends PureComponent {
             <IconAdjustment><RotateRightIcon /></IconAdjustment>
           </RotateButton>
 
-          <UndoButton onClick={undoTransformation}>
+          <UndoButton
+            onClick={undoTransformation}
+            disabled={!canUndo}
+          >
             <IconAdjustment><UndoIcon /></IconAdjustment>
           </UndoButton>
         </Row>
