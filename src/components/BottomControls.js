@@ -1,14 +1,19 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
 import RotateLeftIcon from 'react-icons/lib/md/rotate-left';
 import RotateRightIcon from 'react-icons/lib/md/rotate-right';
 import UndoIcon from 'react-icons/lib/md/undo';
 import ClearIcon from 'react-icons/lib/md/delete';
 
+import {undoTransformation} from '../actions';
 import {colors, media, styles} from '../constants';
+import {getCanUndo} from '../reducers/history.reducer';
 
 import Button from './Button';
 import {Row} from './utility-components';
+
 
 const Section = styled.div`
   position: relative;
@@ -51,15 +56,14 @@ const ClearButton = Button.extend`
 `;
 
 class BottomControls extends PureComponent {
-  handleClear() {
-
-  }
-
-  handleSave() {
-
+  static propTypes = {
+    canUndo: PropTypes.bool.isRequired,
+    undoTransformation: PropTypes.func.isRequired,
   }
 
   render() {
+    const {undoTransformation} = this.props;
+
     return (
       <Section>
         <Row>
@@ -74,7 +78,7 @@ class BottomControls extends PureComponent {
             <IconAdjustment><RotateRightIcon /></IconAdjustment>
           </RotateButton>
 
-          <UndoButton>
+          <UndoButton onClick={undoTransformation}>
             <IconAdjustment><UndoIcon /></IconAdjustment>
           </UndoButton>
         </Row>
@@ -83,4 +87,10 @@ class BottomControls extends PureComponent {
   }
 }
 
-export default BottomControls;
+const mapStateToProps = state => ({
+  canUndo: getCanUndo(state),
+});
+
+const mapDispatchToProps = {undoTransformation}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BottomControls);

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {applyTransformation, undoTransformation} from '../actions';
+import {getCurrentCanvas} from '../reducers/history.reducer';
 import {
   scaleCanvas,
   getPixelRatio,
@@ -35,8 +36,16 @@ class Canvas extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.image !== this.props.image) {
+    const newImageSelected = nextProps.image !== this.props.image;
+    const newTransformationReceived = nextProps.canvas !== this.props.canvas;
+
+    if (newImageSelected) {
       this.updateImage(nextProps.image);
+      this.props.applyTransformation(this.canvas);
+    }
+
+    if (newTransformationReceived) {
+      this.updateImage(nextProps.canvas);
     }
   }
 
@@ -59,7 +68,7 @@ class Canvas extends PureComponent {
     }
   }
 
-  updateImage = (image) => {
+  updateImage = (image, callback) => {
     const canvasWidth = this.canvas.width / this.pixelRatio;
     const canvasHeight = this.canvas.height / this.pixelRatio;
 
@@ -77,7 +86,7 @@ class Canvas extends PureComponent {
     );
 
     // Push this onto the history.
-    this.props.applyTransformation(this.canvas);
+    // this.props.applyTransformation(this.canvas);
   }
 
   getEventCoords = (ev) => {
@@ -203,6 +212,8 @@ class Canvas extends PureComponent {
   releaseDrag = (ev) => {
     this.isDragging = false;
 
+    console.log('Release drag!')
+
     this.props.applyTransformation(this.canvas);
   }
 
@@ -228,8 +239,7 @@ class Canvas extends PureComponent {
 
 const mapStateToProps = state => ({
   image: state.image,
-  // TODO: selector
-  canvas: state.history[state.history.length - 1],
+  canvas: getCurrentCanvas(state),
 });
 
 const mapDispatchToProps = {
