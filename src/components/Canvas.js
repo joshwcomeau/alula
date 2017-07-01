@@ -11,7 +11,7 @@ import {
   getCursorPosition,
   getCroppedImageParams,
   mirrorTransformLine,
-} from '../utils/canvas-utils';
+} from '../utils/canvas.utils';
 
 
 const CanvasElem = styled.canvas`

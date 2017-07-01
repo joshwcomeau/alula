@@ -17,6 +17,8 @@ const getEdgeForPoint = ({ x, y }, size) => {
   }
 }
 
+export const getRadianAngle = degrees => degrees * Math.PI / 180;
+
 export const rotatePointCW = (point, size) => {
   const edge = getEdgeForPoint(point, size);
 
@@ -100,6 +102,4 @@ export function calculatePerimeter(args) {
   // if (startEdge === endEdge) {
   //   return sum + (size - )
   // }
-
-  function sumPerimeter
 }

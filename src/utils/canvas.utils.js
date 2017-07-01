@@ -61,6 +61,22 @@ export function getCroppedImageParams({
   return [offset.x, offset.y, scaleWidth, scaleHeight];
 }
 
+export function createCanvasCopy(canvas) {
+  //create a new canvas
+  const newCanvas = document.createElement('canvas');
+  const newContext = newCanvas.getContext('2d');
+
+  //set dimensions
+  newCanvas.width = canvas.width;
+  newCanvas.height = canvas.height;
+
+  //apply the old canvas to the new one
+  newContext.drawImage(canvas, 0, 0);
+
+  return newCanvas;
+}
+
+
 export function mirrorTransformLine(line){
   let {x1, y1, x2, y2} = line;
   // to save some messing about with signs,
