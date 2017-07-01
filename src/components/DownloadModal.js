@@ -4,20 +4,53 @@ import {CSSTransitionGroup} from 'react-transition-group';
 import styled from 'styled-components';
 
 import {closeModal} from '../actions';
+import {getCurrentCanvas} from '../reducers/history.reducer';
 
 import Button from './Button';
 import {Modal} from './utility-components';
 
 
 class DownloadModal extends PureComponent {
+  state = {
+    imageData: null,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const isAboutToBeTriggered = (
+      !this.props.isSelectedModal &&
+      nextProps.isSelectedModal
+    );
+
+    const isAboutToBeHidden = (
+      this.props.isSelectedModal &&
+      !nextProps.isSelectedModal
+    );
+
+    if (isAboutToBeTriggered) {
+      // Allow a brief pause, so that the image can be parsed.
+      window.setTimeout(() => {
+        this.setState({
+          imageData: this.props.canvas.toDataURL('image/png'),
+        });
+      }, enterTimeout + 100);
+    }
+
+    if (isAboutToBeHidden) {
+      this.setState({ imageData: null });
+    }
+  }
+
   render() {
-    const {isOpen, closeModal} = this.props;
+    const {isSelectedModal, closeModal} = this.props;
+    const {imageData} = this.state;
 
     return (
       <TransitionGroup>
-        {isOpen && (
+        {isSelectedModal && (
           <Modal key="modal">
-            <img ref={elem => this.img = elem} />
+            <ImageContainer>
+              <Image src={imageData} />
+            </ImageContainer>
 
             <p>
               Press and hold on the image above, and select "Save Image".
@@ -31,12 +64,23 @@ class DownloadModal extends PureComponent {
   }
 }
 
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background: rgba(0,0,0,0.25);
+`;
+
+const Image = styled.img`
+  width: 100%;
+`
+
 const enter = 'download-modal-enter';
 const enterActive = 'download-modal-enter-active';
 const leave = 'download-modal-leave';
 const leaveActive = 'download-modal-leave-active';
-const enterTimeout = 250;
-const leaveTimeout = 250;
+const enterTimeout = 500;
+const leaveTimeout = 500;
 
 const TransitionGroup = styled(CSSTransitionGroup).attrs({
   transitionName: { enter, enterActive, leave, leaveActive },
@@ -44,26 +88,27 @@ const TransitionGroup = styled(CSSTransitionGroup).attrs({
   transitionLeaveTimeout: leaveTimeout,
 })`
   .${enter} {
-    opacity: 0.01;
+    transform: translateY(100%);
   }
 
   .${enterActive} {
-    opacity: 1;
-    transition: opacity ${enterTimeout}ms ease-in;
+    transform: translateY(0);
+    transition: transform ${enterTimeout}ms ease-in;
   }
 
   .${leave} {
-    opacity: 1;
+    transform: translateY(0);
   }
 
   .${leaveActive} {
-    opacity: 0.01;
-    transition: opacity ${leaveTimeout}ms ease-in;
+    transform: translateY(100%);
+    transition: transform ${leaveTimeout}ms ease-in;
   }
 `;
 
 const mapStateToProps = state => ({
-  isOpen: state.modal === 'download',
+  isSelectedModal: state.modal === 'download',
+  canvas: getCurrentCanvas(state),
 });
 
 const mapDispatchToProps = {closeModal};

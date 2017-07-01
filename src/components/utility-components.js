@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors, media} from '../constants';
+import {colors, media, styles} from '../constants';
 
 
 export const Column = styled.div`
@@ -41,7 +41,7 @@ export const Modal = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${colors.grays[4]};
+  background: ${colors.grays[1]};
 
   ${media.landscape`
     margin: auto;
