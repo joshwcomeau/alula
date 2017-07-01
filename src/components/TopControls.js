@@ -1,23 +1,17 @@
 import React, {PureComponent} from 'react';
 import styled from 'styled-components';
-import SaveIcon from 'react-icons/lib/md/save';
 import BackIcon from 'react-icons/lib/md/keyboard-backspace';
 
 import {colors, styles} from '../constants';
 
 import Button from './Button';
+import DownloadButton from './DownloadButton';
+import {IconAdjustment} from './utility-components';
 
 const ReturnButton = Button.extend`
   width: ${styles.buttonHeightPx};
   height: ${styles.buttonHeightPx};
   font-size: 18px;
-`;
-
-const SaveButton = Button.extend`
-  border-color: ${colors.greens[2]};
-  color: ${colors.greens[2]};
-  width: ${styles.buttonHeightPx};
-  height: ${styles.buttonHeightPx};
 `;
 
 const Title = styled.h1`
@@ -26,11 +20,6 @@ const Title = styled.h1`
   letter-spacing: -2px;
   color: ${colors.white};
 `;
-
-const IconAdjustment = styled.span`
-  display: inline-block;
-  transform: translateY(-1px);
-`
 
 const TopBar = styled.div`
   position: relative;
@@ -45,14 +34,6 @@ const TopBar = styled.div`
 
 
 class TopControls extends PureComponent {
-  handleClear() {
-
-  }
-
-  handleSave() {
-
-  }
-
   render() {
     return (
       <TopBar>
@@ -62,9 +43,7 @@ class TopControls extends PureComponent {
 
         <Title>Aztec</Title>
 
-        <SaveButton>
-          <IconAdjustment><SaveIcon /></IconAdjustment>
-        </SaveButton>
+        <DownloadButton />
       </TopBar>
     )
   }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {media} from '../constants';
+import {colors, media} from '../constants';
 
 
 export const Column = styled.div`
@@ -26,5 +26,25 @@ export const LandscapeOnly = styled.div`
 export const PortraitOnly = styled.div`
   ${media.landscape`
     display: none;
+  `}
+`;
+
+export const IconAdjustment = styled.span`
+  display: inline-block;
+  transform: translateY(-1px);
+`;
+
+export const Modal = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: ${colors.grays[4]};
+
+  ${media.landscape`
+    margin: auto;
+    max-width: 500px;
   `}
 `;

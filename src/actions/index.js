@@ -6,6 +6,9 @@ export const RECEIVE_NEW_IMAGE = 'RECEIVE_NEW_IMAGE';
 export const CLEAR_IMAGE = 'CLEAR_IMAGE';
 export const APPLY_TRANSFORMATION = 'APPLY_TRANSFORMATION';
 export const UNDO_TRANSFORMATION = 'UNDO_TRANSFORMATION';
+export const RESTORE_ORIGINAL_IMAGE = 'RESTORE_ORIGINAL_IMAGE';
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const ROTATE = 'ROTATE';
 
 
@@ -27,6 +30,19 @@ export const applyTransformation = (canvas) => {
 
 export const undoTransformation = () => ({
   type: UNDO_TRANSFORMATION,
+});
+
+export const restoreOriginalImage = () => ({
+  type: RESTORE_ORIGINAL_IMAGE,
+});
+
+export const openModal = modal => ({
+  type: OPEN_MODAL,
+  modal,
+});
+
+export const closeModal = () => ({
+  type: CLOSE_MODAL,
 });
 
 const rotate = (direction) => () => (

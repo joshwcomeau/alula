@@ -1,4 +1,10 @@
-import {APPLY_TRANSFORMATION, UNDO_TRANSFORMATION, ROTATE} from '../actions';
+import {
+  APPLY_TRANSFORMATION,
+  UNDO_TRANSFORMATION,
+  ROTATE,
+  RESTORE_ORIGINAL_IMAGE,
+  CLEAR_IMAGE,
+} from '../actions';
 
 const initialState = [];
 
@@ -14,6 +20,12 @@ export default function reducer(state = initialState, action) {
 
     case UNDO_TRANSFORMATION:
       return state.slice(0, -1);
+
+    case RESTORE_ORIGINAL_IMAGE:
+      return state.slice(0, 1);
+
+    case CLEAR_IMAGE:
+      return initialState;
 
     default:
       return state;

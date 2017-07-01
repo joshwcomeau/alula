@@ -94,3 +94,7 @@ export const styles = {
   buttonHeight,
   buttonHeightPx: `${buttonHeight}px`,
 };
+
+export const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(
+  navigator.userAgent
+);

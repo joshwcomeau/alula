@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
 import Canvas from './Canvas';
+import DownloadModal from './DownloadModal';
 import {
   Column,
   Row,
@@ -44,6 +45,7 @@ class Main extends Component {
       <FullHeight>
         {this.renderPortrait()}
         {this.renderLandscape()}
+        <DownloadModal />
       </FullHeight>
     );
   }

@@ -5,14 +5,19 @@ import styled from 'styled-components';
 import RotateLeftIcon from 'react-icons/lib/md/rotate-left';
 import RotateRightIcon from 'react-icons/lib/md/rotate-right';
 import UndoIcon from 'react-icons/lib/md/undo';
-import ClearIcon from 'react-icons/lib/md/delete';
+import RestoreIcon from 'react-icons/lib/md/delete';
 
-import {undoTransformation, rotateCW, rotateCCW} from '../actions';
 import {colors, media, styles} from '../constants';
 import {getCanUndo} from '../reducers/history.reducer';
+import {
+  undoTransformation,
+  rotateCW,
+  rotateCCW,
+  restoreOriginalImage,
+} from '../actions';
 
 import Button from './Button';
-import {Row} from './utility-components';
+import {Row, IconAdjustment} from './utility-components';
 
 
 const Section = styled.div`
@@ -24,11 +29,6 @@ const Section = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-`;
-
-const IconAdjustment = styled.span`
-  display: inline-block;
-  transform: translateY(-1px);
 `;
 
 const RotateButton = Button.extend`
@@ -48,7 +48,7 @@ const UndoButton = Button.extend`
   flex: 1;
 `;
 
-const ClearButton = Button.extend`
+const RestoreButton = Button.extend`
   height: ${styles.buttonHeightPx};
   width: ${styles.buttonHeightPx};
   color: ${colors.reds[2]};
@@ -59,6 +59,15 @@ class BottomControls extends PureComponent {
   static propTypes = {
     canUndo: PropTypes.bool.isRequired,
     undoTransformation: PropTypes.func.isRequired,
+  }
+
+  handleRestore = () => {
+    const msg = 'This will reset the image to its original state! Are you sure?';
+
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(msg)) {
+      this.props.restoreOriginalImage();
+    }
   }
 
   render() {
@@ -72,9 +81,9 @@ class BottomControls extends PureComponent {
     return (
       <Section>
         <Row>
-          <ClearButton>
-            <IconAdjustment><ClearIcon /></IconAdjustment>
-          </ClearButton>
+          <RestoreButton onClick={this.handleRestore}>
+            <IconAdjustment><RestoreIcon /></IconAdjustment>
+          </RestoreButton>
 
           <RotateButton onClick={rotateCCW}>
             <IconAdjustment><RotateLeftIcon /></IconAdjustment>
@@ -103,6 +112,7 @@ const mapDispatchToProps = {
   undoTransformation,
   rotateCW,
   rotateCCW,
+  restoreOriginalImage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomControls);
