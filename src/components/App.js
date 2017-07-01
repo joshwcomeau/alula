@@ -21,7 +21,7 @@ class App extends Component {
   // This is just to make life easier while developing.
   // Remove this on-mount method
   componentDidMount() {
-    const DEFAULT_IMAGE_SRC = require('../assets/plant.jpg');
+    const DEFAULT_IMAGE_SRC = require('../assets/forest.png');
     const {receiveNewImage} = require('../actions');
     const {loadImage} = require('../utils/image.utils.js');
 
