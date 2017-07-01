@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk'
 import { routerMiddleware } from 'react-router-redux'
 import Perf from 'react-addons-perf';
 
@@ -12,7 +13,7 @@ export default function configureStore(history) {
   const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(routerMiddleware(history)),
+      applyMiddleware(routerMiddleware(history), thunk),
       DevTools.instrument()
     )
   );

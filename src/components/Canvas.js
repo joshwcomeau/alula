@@ -212,9 +212,10 @@ class Canvas extends PureComponent {
   releaseDrag = (ev) => {
     this.isDragging = false;
 
-    console.log('Release drag!')
-
     this.props.applyTransformation(this.canvas);
+    // this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+    // this.ctx.rotate(true ? -Math.PI / 2 : Math.PI / 2);
+
   }
 
   storeRefToCanvas = (canvas) => {

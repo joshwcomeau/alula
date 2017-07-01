@@ -1,4 +1,4 @@
-import {APPLY_TRANSFORMATION, UNDO_TRANSFORMATION} from '../actions';
+import {APPLY_TRANSFORMATION, UNDO_TRANSFORMATION, ROTATE} from '../actions';
 
 const initialState = [];
 
@@ -8,9 +8,15 @@ const initialState = [];
 // mobile devices.
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case APPLY_TRANSFORMATION: return [...state, action.canvas];
-    case UNDO_TRANSFORMATION: return state.slice(0, -1);
-    default: return state;
+    case ROTATE:
+    case APPLY_TRANSFORMATION:
+      return [...state, action.canvas];
+
+    case UNDO_TRANSFORMATION:
+      return state.slice(0, -1);
+
+    default:
+      return state;
   }
 }
 

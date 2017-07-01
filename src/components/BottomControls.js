@@ -7,7 +7,7 @@ import RotateRightIcon from 'react-icons/lib/md/rotate-right';
 import UndoIcon from 'react-icons/lib/md/undo';
 import ClearIcon from 'react-icons/lib/md/delete';
 
-import {undoTransformation} from '../actions';
+import {undoTransformation, rotateCW, rotateCCW} from '../actions';
 import {colors, media, styles} from '../constants';
 import {getCanUndo} from '../reducers/history.reducer';
 
@@ -62,7 +62,12 @@ class BottomControls extends PureComponent {
   }
 
   render() {
-    const {canUndo, undoTransformation} = this.props;
+    const {
+      canUndo,
+      undoTransformation,
+      rotateCW,
+      rotateCCW,
+    } = this.props;
 
     return (
       <Section>
@@ -71,10 +76,10 @@ class BottomControls extends PureComponent {
             <IconAdjustment><ClearIcon /></IconAdjustment>
           </ClearButton>
 
-          <RotateButton>
+          <RotateButton onClick={rotateCCW}>
             <IconAdjustment><RotateLeftIcon /></IconAdjustment>
           </RotateButton>
-          <RotateButton>
+          <RotateButton onClick={rotateCW}>
             <IconAdjustment><RotateRightIcon /></IconAdjustment>
           </RotateButton>
 
@@ -94,6 +99,10 @@ const mapStateToProps = state => ({
   canUndo: getCanUndo(state),
 });
 
-const mapDispatchToProps = {undoTransformation}
+const mapDispatchToProps = {
+  undoTransformation,
+  rotateCW,
+  rotateCCW,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomControls);
