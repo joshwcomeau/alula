@@ -7,6 +7,7 @@ import {closeModal} from '../actions';
 import {getCurrentCanvas} from '../reducers/history.reducer';
 
 import Button from './Button';
+import Spinner from './Spinner';
 import {Modal} from './utility-components';
 
 
@@ -49,7 +50,7 @@ class DownloadModal extends PureComponent {
         {isSelectedModal && (
           <Modal key="modal">
             <ImageContainer>
-              <Image src={imageData} />
+              {imageData ? <Image src={imageData} /> : <Spinner />}
             </ImageContainer>
 
             <p>
@@ -66,14 +67,16 @@ class DownloadModal extends PureComponent {
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+  height: ${window.innerWidth}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: rgba(0,0,0,0.25);
 `;
 
 const Image = styled.img`
   width: 100%;
-`
+`;
 
 const enter = 'download-modal-enter';
 const enterActive = 'download-modal-enter-active';
