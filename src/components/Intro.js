@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import ImageUploader from './ImageUploader';
 
 
+const Title = styled.h1`
+  font-size: 72px;
+  font-weight: bold;
+  letter-spacing: -2px;
+`;
 class Intro extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,

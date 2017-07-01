@@ -47,13 +47,14 @@ export const grays = [
   '#F5F5F5',
   '#E0E0E0',
   '#9E9E9E',
-  '#9E9E9E',
+  '#616161',
   '#212121',
 ];
 
 export const white = '#FFFFFF';
 
 export const colors = {reds, pinks, purples, blues, greens, grays, white};
+
 
 // Media queries
 const orientations = ['portrait', 'landscape'].reduce((acc, orientation) => ({
@@ -65,4 +66,28 @@ const orientations = ['portrait', 'landscape'].reduce((acc, orientation) => ({
   `
 }), {});
 
-export const media = {...orientations};
+export const media = {
+  ...orientations,
+  // Special breakpoint for iPhone 5 sized devices
+  xs: (...args) => css`
+    @media (max-width: 320px) {
+      ${css(...args)}
+    }
+  `
+};
+
+
+// Shared style variables
+export const headerHeight = 68;
+export const backgroundColor = colors.grays[4];
+export const textColor = colors.white;
+export const paddingUnit = 14;
+
+export const styles = {
+  headerHeight,
+  headerHeightPx: `${headerHeight}px`,
+  backgroundColor,
+  textColor,
+  paddingUnit,
+  paddingUnitPx: `${paddingUnit}px`,
+};
