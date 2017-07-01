@@ -78,16 +78,19 @@ export const media = {
 
 
 // Shared style variables
-export const headerHeight = 68;
-export const backgroundColor = colors.grays[4];
-export const textColor = colors.white;
-export const paddingUnit = 14;
+const backgroundColor = colors.grays[4];
+const textColor = colors.white;
+const paddingUnit = 14;
+const buttonHeight = 60;
+const barHeight = buttonHeight + paddingUnit * 2;
 
 export const styles = {
-  headerHeight,
-  headerHeightPx: `${headerHeight}px`,
+  barHeight,
+  barHeightPx: `${barHeight}px`,
   backgroundColor,
   textColor,
   paddingUnit,
   paddingUnitPx: `${paddingUnit}px`,
+  buttonHeight,
+  buttonHeightPx: `${buttonHeight}px`,
 };
