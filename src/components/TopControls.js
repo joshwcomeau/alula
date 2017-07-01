@@ -8,19 +8,19 @@ import {colors} from '../constants';
 import Button from './Button';
 
 const ReturnButton = Button.extend`
-  background: ${colors.reds[2]};
-  width: 15%;
+  background: ${colors.grays[4]};
+  width: 55px;
   font-size: 18px;
 `;
 
 const SaveButton = Button.extend`
   background: ${colors.greens[2]};
-  width: 15%;
+  width: 55px;
 `;
 
 const IconAdjustment = styled.span`
   display: inline-block;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 `
 
 const TopBar = styled.div`
