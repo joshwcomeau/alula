@@ -4,6 +4,7 @@ import {CSSTransitionGroup} from 'react-transition-group';
 import styled from 'styled-components';
 
 import {closeModal} from '../actions';
+import {colors, styles, isMobile} from '../constants';
 import {getCurrentCanvas} from '../reducers/history.reducer';
 
 import Button from './Button';
@@ -45,25 +46,45 @@ class DownloadModal extends PureComponent {
     const {isSelectedModal, closeModal} = this.props;
     const {imageData} = this.state;
 
+    const copy = isMobile
+      ? <span><strong>Press and hold</strong> on the image above, and select <strong>"Save Image"</strong></span>
+      : <span><strong>Right-click</strong> the image above, and select <strong>"Save Image As"</strong></span>;
+
     return (
       <TransitionGroup>
         {isSelectedModal && (
-          <Modal key="modal">
+          <DownloadModalElem key="modal">
             <ImageContainer>
               {imageData ? <Image src={imageData} /> : <Spinner />}
             </ImageContainer>
 
-            <p>
-              Press and hold on the image above, and select "Save Image".
-            </p>
+            <Instructions>
+              {copy}
+            </Instructions>
 
-            <Button onClick={closeModal}>Done</Button>
-          </Modal>
+            <Button
+              fill
+              width="100%"
+              color={colors.blues[2]}
+              onClick={closeModal}
+              style={{
+                maxWidth: 300,
+                margin: `${styles.paddingUnitPx} auto`,
+              }}
+            >
+              Done
+            </Button>
+          </DownloadModalElem>
         )}
       </TransitionGroup>
     );
   }
 }
+
+const DownloadModalElem = Modal.extend`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -77,6 +98,22 @@ const ImageContainer = styled.div`
 const Image = styled.img`
   width: 100%;
 `;
+
+const Content = styled.div`
+  padding: ${styles.paddingUnitPx};
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const Instructions = styled.div`
+  flex: 1;
+  font-size: 18px;
+  text-align: center;
+  margin: ${styles.paddingUnit * 2}px;
+`
 
 const enter = 'download-modal-enter';
 const enterActive = 'download-modal-enter-active';

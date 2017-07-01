@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import {applyTransformation, undoTransformation} from '../actions';
 import {getCurrentCanvas} from '../reducers/history.reducer';
+import {disableEventOnMobile} from '../utils/event.utils';
 import {
   scaleCanvas,
   getPixelRatio,
@@ -31,8 +32,7 @@ class Canvas extends PureComponent {
   componentDidMount() {
     this.ctx.imageSmoothingEnabled = false;
 
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
+    this.initialize();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,11 +49,9 @@ class Canvas extends PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize = () => {
+  initialize = () => {
+    // Make the image a square, based on the largest dimension (either
+    // full-width or full-height)
     const size = Math.min(window.innerWidth, window.innerHeight);
 
     this.canvas.width = size;
@@ -84,24 +82,13 @@ class Canvas extends PureComponent {
       image,
       ...croppedImageParams
     );
-
-    // Push this onto the history.
-    // this.props.applyTransformation(this.canvas);
   }
 
   getEventCoords = (ev) => {
-    const isTouchEvent = !!ev.touches;
-
-    if (isTouchEvent) {
-      // Prevent default "scroll" behaviour on mobile.
-      ev.preventDefault();
-      ev.stopPropagation();
-    }
-
     // This method normalizes the difference between touch events and mouse
     // events, to return a set of X/Y coordinates for an event regardess
     // of input device.
-    const coordHolder = isTouchEvent ? ev.touches[0] : ev;
+    const coordHolder = ev.touches ? ev.touches[0] : ev;
 
     try {
       getCursorPosition(coordHolder, this.canvas)
@@ -113,6 +100,8 @@ class Canvas extends PureComponent {
   }
 
   startDrag = (ev) => {
+    disableEventOnMobile(ev);
+
     const {x: x1, y: y1} = this.getEventCoords(ev);
     this.x1 = x1;
     this.y1 = y1;
@@ -210,6 +199,8 @@ class Canvas extends PureComponent {
   }
 
   releaseDrag = (ev) => {
+    disableEventOnMobile(ev);
+
     this.isDragging = false;
 
     this.props.applyTransformation(this.canvas);

@@ -8,12 +8,6 @@ import Button from './Button';
 import DownloadButton from './DownloadButton';
 import {IconAdjustment} from './utility-components';
 
-const ReturnButton = Button.extend`
-  width: ${styles.buttonHeightPx};
-  height: ${styles.buttonHeightPx};
-  font-size: 18px;
-`;
-
 const Title = styled.h1`
   font-size: 28px;
   font-weight: bold;
@@ -37,9 +31,9 @@ class TopControls extends PureComponent {
   render() {
     return (
       <TopBar>
-        <ReturnButton>
+        <Button width={styles.buttonHeightPx}>
           <IconAdjustment><BackIcon /></IconAdjustment>
-        </ReturnButton>
+        </Button>
 
         <Title>Aztec</Title>
 

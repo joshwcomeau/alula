@@ -17,10 +17,9 @@ const history = createHistory();
 const store = configureStore(history);
 
 class App extends Component {
-  // TEMP TEMP TEMP
-  // This is just to make life easier while developing.
-  // Remove this on-mount method
   componentDidMount() {
+    // TEMP TEMP TEMP
+    // This is just to make life easier while developing.
     const DEFAULT_IMAGE_SRC = require('../assets/forest.png');
     const {receiveNewImage} = require('../actions');
     const {loadImage} = require('../utils/image.utils.js');
@@ -31,7 +30,7 @@ class App extends Component {
       store.dispatch(receiveNewImage(image));
       store.dispatch(push('/create'));
     }).catch(console.error);
-
+    // END TEMP TEMP TEMP
   }
 
   render() {

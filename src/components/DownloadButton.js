@@ -10,23 +10,21 @@ import Button from './Button';
 import {Modal, IconAdjustment} from './utility-components';
 
 
-const DownloadButtonElem = Button.extend`
-  border-color: ${colors.greens[2]};
-  color: ${colors.greens[2]};
-  width: ${styles.buttonHeightPx};
-  height: ${styles.buttonHeightPx};
-`;
-
 class DownloadButton extends PureComponent {
   render() {
     const {openModal} = this.props;
 
     return (
-      <DownloadButtonElem onClick={() => openModal('download')}>
+      <Button
+        color={colors.greens[2]}
+        borderColor={colors.greens[3]}
+        width={styles.buttonHeightPx}
+        onClick={() => openModal('download')}
+      >
         <IconAdjustment>
           <SaveIcon />
         </IconAdjustment>
-      </DownloadButtonElem>
+      </Button>
     )
   }
 }

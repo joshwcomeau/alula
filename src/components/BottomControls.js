@@ -31,29 +31,29 @@ const Section = styled.div`
   flex-direction: column;
 `;
 
-const RotateButton = Button.extend`
-  margin-left: ${styles.paddingUnitPx};
-  width: ${styles.buttonHeightPx};
-  height: ${styles.buttonHeightPx};
-  color: ${colors.pinks[1]};
-  border-color: ${colors.pinks[2]};
-  font-size: 22px;
-`;
-
-const UndoButton = Button.extend`
-  height: ${styles.buttonHeightPx};
-  color: ${colors.purples[1]};
-  border-color: ${colors.purples[2]};
-  margin-left: ${styles.paddingUnitPx};
-  flex: 1;
-`;
-
-const RestoreButton = Button.extend`
-  height: ${styles.buttonHeightPx};
-  width: ${styles.buttonHeightPx};
-  color: ${colors.reds[2]};
-  border-color: ${colors.reds[3]};
-`;
+// const RotateButton = Button.extend`
+//   margin-left: ${styles.paddingUnitPx};
+//   width: ${styles.buttonHeightPx};
+//   height: ${styles.buttonHeightPx};
+//   color: ${colors.pinks[1]};
+//   border-color: ${colors.pinks[2]};
+//   font-size: 22px;
+// `;
+//
+// const UndoButton = Button.extend`
+//   height: ${styles.buttonHeightPx};
+//   color: ${colors.purples[1]};
+//   border-color: ${colors.purples[2]};
+//   margin-left: ${styles.paddingUnitPx};
+//   flex: 1;
+// `;
+//
+// const RestoreButton = Button.extend`
+//   height: ${styles.buttonHeightPx};
+//   width: ${styles.buttonHeightPx};
+//   color: ${colors.reds[2]};
+//   border-color: ${colors.reds[3]};
+// `;
 
 class BottomControls extends PureComponent {
   static propTypes = {
@@ -81,23 +81,43 @@ class BottomControls extends PureComponent {
     return (
       <Section>
         <Row>
-          <RestoreButton onClick={this.handleRestore}>
+          <Button
+            width={styles.buttonHeightPx}
+            color={colors.reds[2]}
+            borderColor={colors.reds[3]}
+            onClick={this.handleRestore}
+          >
             <IconAdjustment><RestoreIcon /></IconAdjustment>
-          </RestoreButton>
+          </Button>
 
-          <RotateButton onClick={rotateCCW}>
+          <Button
+            width={styles.buttonHeightPx}
+            color={colors.pinks[1]}
+            borderColor={colors.pinks[2]}
+            onClick={rotateCCW}
+            style={{ marginLeft: styles.paddingUnit }}
+          >
             <IconAdjustment><RotateLeftIcon /></IconAdjustment>
-          </RotateButton>
-          <RotateButton onClick={rotateCW}>
+          </Button>
+          <Button
+            width={styles.buttonHeightPx}
+            color={colors.pinks[1]}
+            borderColor={colors.pinks[2]}
+            onClick={rotateCW}
+            style={{ marginLeft: styles.paddingUnit }}
+          >
             <IconAdjustment><RotateRightIcon /></IconAdjustment>
-          </RotateButton>
+          </Button>
 
-          <UndoButton
+          <Button
+            color={colors.purples[1]}
+            borderColor={colors.purples[2]}
             onClick={undoTransformation}
             disabled={!canUndo}
+            style={{ flex: 1, marginLeft: styles.paddingUnit }}
           >
             <IconAdjustment><UndoIcon /></IconAdjustment>
-          </UndoButton>
+          </Button>
         </Row>
       </Section>
     )
