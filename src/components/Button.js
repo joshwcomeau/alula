@@ -5,11 +5,13 @@ import {colors} from '../constants';
 
 const Button = styled.button`
   position: relative;
-  height: 50px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  background: ${colors.blues[3]};
+  height: 35px;
+  padding: 0 15px;
+  border-radius: 1px;
+  border: none;
+  font-size: 15px;
+  font-weight: 400;
+  background: ${colors.blues[2]};
   color: ${colors.white};
 `;
 

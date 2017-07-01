@@ -35,6 +35,14 @@ export const blues = [
   '#1A237E',
 ];
 
+export const greens = [
+  '#C8E6C9',
+  '#81C784',
+  '#4CAF50',
+  '#388E3C',
+  '#1B5E20',
+];
+
 export const grays = [
   '#F5F5F5',
   '#E0E0E0',
@@ -45,7 +53,7 @@ export const grays = [
 
 export const white = '#FFFFFF';
 
-export const colors = {reds, pinks, purples, blues, grays, white};
+export const colors = {reds, pinks, purples, blues, greens, grays, white};
 
 // Media queries
 const orientations = ['portrait', 'landscape'].reduce((acc, orientation) => ({

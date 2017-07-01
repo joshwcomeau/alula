@@ -9,6 +9,7 @@ import configureStore from '../store';
 import Intro from './Intro';
 import Main from './Main';
 import DevTools from './DevTools';
+import {FullHeight} from './utility-components';
 
 
 const history = createHistory();
@@ -37,12 +38,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div>
+          <FullHeight>
             <Route exact path="/" component={Intro} />
             <Route path="/create" component={Main} />
 
             <DevTools />
-          </div>
+          </FullHeight>
         </ConnectedRouter>
       </Provider>
     );

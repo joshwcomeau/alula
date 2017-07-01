@@ -1,38 +1,16 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-
-import {media} from '../constants';
 
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
 import Canvas from './Canvas';
+import {
+  Column,
+  Row,
+  FullHeight,
+  LandscapeOnly,
+  PortraitOnly,
+} from './utility-components';
 
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const FullHeight = styled.div`
-  height: 100%;
-`;
-
-const LandscapeOnly = styled.div`
-  ${media.portrait`
-    display: none;
-  `}
-`;
-
-const PortraitOnly = styled.div`
-  ${media.landscape`
-    display: none;
-  `}
-`;
 
 class Main extends Component {
   renderPortrait() {

@@ -15,6 +15,8 @@ import {
 
 const CanvasElem = styled.canvas`
   position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
   height: 100%;
   background: #CCC;
@@ -23,11 +25,6 @@ const CanvasElem = styled.canvas`
 class Canvas extends PureComponent {
   static propTypes = {
     image: PropTypes.object,
-  }
-
-  state = {
-    x: 0,
-    y: 0,
   }
 
   componentDidMount() {
@@ -88,12 +85,20 @@ class Canvas extends PureComponent {
   }
 
   getEventCoords = (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
     // This method normalizes the difference between touch events and mouse
     // events, to return a set of X/Y coordinates for an event regardess
     // of input device.
     const coordHolder = ev.touches ? ev.touches[0] : ev;
 
-    return getCursorPosition(ev, this.canvas);
+    try {
+      getCursorPosition(coordHolder, this.canvas)
+    } catch (e) {
+      alert(e);
+    }
+
+    return getCursorPosition(coordHolder, this.canvas);
   }
 
   startDrag = (ev) => {
@@ -119,8 +124,6 @@ class Canvas extends PureComponent {
 
     const {x1, y1} = this;
     const {x: x2, y: y2} = this.getEventCoords(ev);
-
-    this.setState({ x: x2, y: y2 });
 
     const sideA = x2 - x1;
     const sideB = y2 - y1;
@@ -201,20 +204,16 @@ class Canvas extends PureComponent {
   }
 
   render() {
-    const {x, y} = this.state;
     return (
-      <div>
-        <CanvasElem
-          innerRef={this.storeRefToCanvas}
-          onMouseDown={this.startDrag}
-          onMouseMove={this.handleDrag}
-          onMouseUp={this.releaseDrag}
-          onTouchStart={this.startDrag}
-          onTouchMove={this.handleDrag}
-          onTouchEnd={this.releaseDrag}
-        />
-        <span>{x}, {y}</span>
-      </div>
+      <CanvasElem
+        innerRef={this.storeRefToCanvas}
+        onMouseDown={this.startDrag}
+        onMouseMove={this.handleDrag}
+        onMouseUp={this.releaseDrag}
+        onTouchStart={this.startDrag}
+        onTouchMove={this.handleDrag}
+        onTouchEnd={this.releaseDrag}
+      />
     );
   }
 }

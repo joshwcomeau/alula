@@ -1,14 +1,38 @@
 import React, {PureComponent} from 'react';
 import styled from 'styled-components';
+import SaveIcon from 'react-icons/lib/md/save';
+import BackIcon from 'react-icons/lib/md/keyboard-backspace';
 
 import {colors} from '../constants';
 
+import Button from './Button';
+
+const ReturnButton = Button.extend`
+  background: ${colors.reds[2]};
+  width: 15%;
+  font-size: 18px;
+`;
+
+const SaveButton = Button.extend`
+  background: ${colors.greens[2]};
+  width: 15%;
+`;
+
+const IconAdjustment = styled.span`
+  display: inline-block;
+  transform: translateY(-2px);
+`
+
 const TopBar = styled.div`
   position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 60px;
-  padding: 5px 10px;
-  background: ${colors.grays[4]};
-  color: ${colors.grays[0]};
+  padding: 0 14px;
+  background: ${colors.white};
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
 `;
 
 
@@ -24,7 +48,13 @@ class TopControls extends PureComponent {
   render() {
     return (
       <TopBar>
-        Top!
+        <ReturnButton>
+          <IconAdjustment><BackIcon /></IconAdjustment>
+        </ReturnButton>
+
+        <SaveButton>
+          <IconAdjustment><SaveIcon /></IconAdjustment>
+        </SaveButton>
       </TopBar>
     )
   }
