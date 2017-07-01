@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import createCanvasHistory from '../utils/canvas-history';
+import {applyTransformation, undoTransformation} from '../actions';
 import {
   scaleCanvas,
   getPixelRatio,
@@ -28,10 +28,6 @@ class Canvas extends PureComponent {
   }
 
   componentDidMount() {
-    // Items are added to the history when the mouse is released,
-    // since that "officially" sets the state.
-    this.history = createCanvasHistory();
-
     this.ctx.imageSmoothingEnabled = false;
 
     this.handleResize();
@@ -81,16 +77,22 @@ class Canvas extends PureComponent {
     );
 
     // Push this onto the history.
-    this.history.save(this.canvas);
+    this.props.applyTransformation(this.canvas);
   }
 
   getEventCoords = (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
+    const isTouchEvent = !!ev.touches;
+
+    if (isTouchEvent) {
+      // Prevent default "scroll" behaviour on mobile.
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
     // This method normalizes the difference between touch events and mouse
     // events, to return a set of X/Y coordinates for an event regardess
     // of input device.
-    const coordHolder = ev.touches ? ev.touches[0] : ev;
+    const coordHolder = isTouchEvent ? ev.touches[0] : ev;
 
     try {
       getCursorPosition(coordHolder, this.canvas)
@@ -117,7 +119,13 @@ class Canvas extends PureComponent {
     // At the start of each move event, restore the canvas to the previously
     // saved state. This is necessary because each move updates the canvas
     // as a 'preview'. The state isn't saved until the drag is released.
-    this.history.restore(this.canvas, this.ctx);
+    this.ctx.drawImage(
+      this.props.canvas,
+      0,
+      0,
+      this.canvas.width / this.pixelRatio,
+      this.canvas.height / this.pixelRatio,
+    );
 
     this.ctx.save();
 
@@ -195,7 +203,7 @@ class Canvas extends PureComponent {
   releaseDrag = (ev) => {
     this.isDragging = false;
 
-    this.history.save(this.canvas);
+    this.props.applyTransformation(this.canvas);
   }
 
   storeRefToCanvas = (canvas) => {
@@ -220,6 +228,13 @@ class Canvas extends PureComponent {
 
 const mapStateToProps = state => ({
   image: state.image,
+  // TODO: selector
+  canvas: state.history[state.history.length - 1],
 });
 
-export default connect(mapStateToProps)(Canvas);
+const mapDispatchToProps = {
+  applyTransformation,
+  undoTransformation,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
