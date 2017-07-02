@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import SaveIcon from 'react-icons/lib/md/save';
 
 import {openModal} from '../actions';
-import {colors, styles, isMobile} from '../constants';
+import {colors, styles} from '../constants';
 import {getCurrentCanvas} from '../reducers/history.reducer';
 
 import Button from './Button';
-import {Modal, IconAdjustment} from './utility-components';
+import {IconAdjustment} from './utility-components';
 
 
 class DownloadButton extends PureComponent {

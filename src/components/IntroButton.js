@@ -1,7 +1,5 @@
 import React from 'react';
 
-import {colors, styles} from '../constants';
-
 import Button from './Button';
 
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {receiveNewImage} from '../actions';
-import {colors, styles} from '../constants';
+import {colors} from '../constants';
 import {readAsDataURL, loadImage} from '../utils/image.utils.js'
 
 import IntroButton from './IntroButton';

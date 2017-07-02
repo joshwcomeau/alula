@@ -7,7 +7,7 @@ import RotateRightIcon from 'react-icons/lib/md/rotate-right';
 import UndoIcon from 'react-icons/lib/md/undo';
 import RestoreIcon from 'react-icons/lib/md/delete';
 
-import {colors, media, styles} from '../constants';
+import {colors, styles} from '../constants';
 import {getCanUndo} from '../reducers/history.reducer';
 import {
   undoTransformation,

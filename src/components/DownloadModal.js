@@ -99,15 +99,6 @@ const Image = styled.img`
   width: 100%;
 `;
 
-const Content = styled.div`
-  padding: ${styles.paddingUnitPx};
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
-
 const Instructions = styled.div`
   flex: 1;
   font-size: 18px;

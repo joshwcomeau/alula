@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors, media, styles} from '../constants';
+import {colors, media} from '../constants';
 
 
 export const Column = styled.div`

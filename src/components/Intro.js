@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {colors, media, styles} from '../constants';
+import {colors, styles} from '../constants';
 import demoGIFUrl from '../assets/demo-2.gif';
 
-import Button from './Button';
 import ImageUploader from './ImageUploader';
 import RandomImageSelector from './RandomImageSelector';
 

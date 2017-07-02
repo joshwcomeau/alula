@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import {receiveNewImage} from '../actions';
 import {colors, styles} from '../constants';
@@ -12,6 +11,11 @@ import IntroButton from './IntroButton';
 
 
 class RandomImageSelector extends PureComponent {
+  static propTypes = {
+    receiveNewImage: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+  }
+
   componentDidMount() {
     // Pre-emptively fetch the image, so that if the user selects "random",
     // it's already available.
