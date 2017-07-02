@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {colors} from '../constants';
+import {colors, media, styles} from '../constants';
 
 class Button extends Component {
   static propTypes = {
@@ -48,16 +48,21 @@ class Button extends Component {
 
 const BaseButtonElem = styled.button`
   position: relative;
-  height: 60px;
+  height: ${styles.buttonHeightPx};
   padding: 0;
   border-radius: 2px;
   border-style: solid;
   font-size: 18px;
   font-weight: 400;
+  outline: none;
 
   &:disabled {
     opacity: 0.5;
   }
+
+  ${media.xs`
+    height: ${styles.buttonHeightXSPx};
+  `}
 `;
 
 

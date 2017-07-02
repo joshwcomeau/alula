@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import styled from 'styled-components';
 import BackIcon from 'react-icons/lib/md/keyboard-backspace';
 
-import {colors, styles} from '../constants';
+import {colors, media, styles} from '../constants';
 
 import Button from './Button';
 import DownloadButton from './DownloadButton';
@@ -24,6 +24,10 @@ const TopBar = styled.div`
   height: ${styles.barHeightPx};
   padding: 0 ${styles.paddingUnitPx};
   background: ${styles.backgroundColor};
+
+  ${media.xs`
+    height: ${styles.barHeightXSPx};
+  `}
 `;
 
 

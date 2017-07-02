@@ -82,17 +82,23 @@ const backgroundColor = colors.grays[4];
 const textColor = colors.white;
 const paddingUnit = 14;
 const buttonHeight = 60;
+const buttonHeightXS = 45;
 const barHeight = buttonHeight + paddingUnit * 2;
+const barHeightXS = buttonHeightXS + paddingUnit * 2;
 
 export const styles = {
   barHeight,
   barHeightPx: `${barHeight}px`,
+  barHeightXS,
+  barHeightXSPx: `${barHeightXS}px`,
   backgroundColor,
   textColor,
   paddingUnit,
   paddingUnitPx: `${paddingUnit}px`,
   buttonHeight,
   buttonHeightPx: `${buttonHeight}px`,
+  buttonHeightXS,
+  buttonHeightXSPx: `${buttonHeightXS}px`,
 };
 
 export const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(
