@@ -24,7 +24,9 @@ class RandomImageSelector extends PureComponent {
   componentDidMount() {
     // Pre-emptively fetch the image, so that if the user selects "random",
     // it's already available.
-    const size = Math.min(window.innerWidth, window.innerHeight);
+    const visibleSize = Math.min(window.innerWidth, window.innerHeight);
+    const size = visibleSize * window.devicePixelRatio;
+    
     const url = `https://source.unsplash.com/random/${size}x${size}`;
 
     this.loadPromise = loadImage(url).then(image => {
