@@ -8,9 +8,14 @@ import {colors, styles} from '../constants';
 import {loadImage} from '../utils/image.utils.js'
 
 import IntroButton from './IntroButton';
+import Spinner from './Spinner';
 
 
 class RandomImageSelector extends PureComponent {
+  state = {
+    waitingOnLoad: false,
+  }
+
   static propTypes = {
     receiveNewImage: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -22,7 +27,7 @@ class RandomImageSelector extends PureComponent {
     const size = Math.min(window.innerWidth, window.innerHeight);
     const url = `https://source.unsplash.com/random/${size}x${size}`;
 
-    loadImage(url).then(image => {
+    this.loadPromise = loadImage(url).then(image => {
       this.image = image;
     });
   }
@@ -30,11 +35,21 @@ class RandomImageSelector extends PureComponent {
   handleClick = () => {
     const {receiveNewImage, push} = this.props;
 
-    receiveNewImage(this.image);
-    push('/create');
+    this.setState({ waitingOnLoad: true });
+
+    this.loadPromise.then(() => {
+      this.setState({
+        waitingOnLoad: false,
+      });
+
+      receiveNewImage(this.image);
+      push('/create');
+    });
   }
 
   render() {
+    const {waitingOnLoad} = this.state;
+
     return (
       <IntroButton
         color={colors.purples[1]}
@@ -42,7 +57,10 @@ class RandomImageSelector extends PureComponent {
         style={{marginTop: styles.paddingUnitPx}}
         onClick={this.handleClick}
       >
-        Use Random Photo
+        {waitingOnLoad
+          ? <Spinner size={14} color={colors.purples[1]} />
+          : "Use Random Photo"
+        }
       </IntroButton>
     );
   }
