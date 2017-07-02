@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -59,7 +59,6 @@ export class ImageUploader extends PureComponent {
         <IntroButton
           color={colors.pinks[1]}
           borderColor={colors.pinks[2]}
-          style={{marginBottom: styles.paddingUnitPx}}
         >
           {loading
             ? <Spinner size={14} color={colors.pinks[1]} />
@@ -72,7 +71,7 @@ export class ImageUploader extends PureComponent {
 }
 
 const Container = styled.div`
-  positon: relative;
+  position: relative;
 `
 
 const mapDispatchToProps = {receiveNewImage, push};
