@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import { push } from 'react-router-redux';
+import {push} from 'react-router-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

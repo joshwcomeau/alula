@@ -12,13 +12,13 @@ import {IconAdjustment} from './utility-components';
 
 class DownloadButton extends PureComponent {
   render() {
-    const {openModal} = this.props;
+    const {width, openModal} = this.props;
 
     return (
       <Button
         color={colors.greens[2]}
         borderColor={colors.greens[3]}
-        width={styles.buttonHeightPx}
+        width={width}
         onClick={() => openModal('download')}
       >
         <IconAdjustment>

@@ -1,12 +1,43 @@
 import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import BackIcon from 'react-icons/lib/md/keyboard-backspace';
 
+import {clearImage} from '../actions';
 import {colors, media, styles} from '../constants';
 
 import Button from './Button';
 import DownloadButton from './DownloadButton';
 import {IconAdjustment} from './utility-components';
+
+
+class TopControls extends PureComponent {
+  static propTypes = {
+    clearImage: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+  }
+
+  handleClear = () => {
+    this.props.clearImage();
+    this.props.push('/');
+  }
+
+  render() {
+    return (
+      <TopBar>
+        <Button width={styles.buttonHeightPx} onClick={this.handleClear}>
+          <IconAdjustment><BackIcon /></IconAdjustment>
+        </Button>
+
+        <Title>Aztec</Title>
+
+        <DownloadButton width={styles.buttonHeightPx} />
+      </TopBar>
+    )
+  }
+}
 
 const Title = styled.h1`
   font-size: 28px;
@@ -30,21 +61,4 @@ const TopBar = styled.div`
   `}
 `;
 
-
-class TopControls extends PureComponent {
-  render() {
-    return (
-      <TopBar>
-        <Button width={styles.buttonHeightPx}>
-          <IconAdjustment><BackIcon /></IconAdjustment>
-        </Button>
-
-        <Title>Aztec</Title>
-
-        <DownloadButton />
-      </TopBar>
-    )
-  }
-}
-
-export default TopControls;
+export default connect(null, {clearImage, push})(TopControls);
