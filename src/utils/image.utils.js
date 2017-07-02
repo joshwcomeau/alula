@@ -16,6 +16,7 @@ export const loadImage = src => (
   new Promise((resolve, reject) => {
     try {
       const image = document.createElement('img');
+      image.setAttribute('crossOrigin', 'anonymous');
 
       image.onload = ev => resolve(image);
 

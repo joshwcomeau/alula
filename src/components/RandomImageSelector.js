@@ -22,12 +22,20 @@ class RandomImageSelector extends PureComponent {
   }
 
   componentDidMount() {
+    const visibleSize = Math.min(window.innerWidth, window.innerHeight);
+    this.size = visibleSize * window.devicePixelRatio;
+
     // Pre-emptively fetch the image, so that if the user selects "random",
     // it's already available.
-    const visibleSize = Math.min(window.innerWidth, window.innerHeight);
-    const size = visibleSize * window.devicePixelRatio;
+    this.loadRandomImage();
+  }
 
-    const url = `https://source.unsplash.com/random/${size}x${size}`;
+  loadRandomImage = () => {
+    const dimensions = `${this.size}x${this.size}`;
+    const rnd = String(Math.random()).slice(2);
+    const url = `https://source.unsplash.com/random/${dimensions}?v=${rnd}`;
+
+    console.log(url)
 
     this.loadPromise = loadImage(url).then(image => {
       this.image = image;

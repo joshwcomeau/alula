@@ -1,8 +1,10 @@
 {
-  "name": "threejs",
+  "name": "aztec",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
+    "express": "^4.15.3",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -24,10 +26,13 @@
     "three": "0.80"
   },
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "react-scripts": "1.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"yarn start:client\" \"yarn start:server\"",
+    "start:client": "react-scripts start",
+    "start:server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
