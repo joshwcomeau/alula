@@ -30,9 +30,23 @@ class Canvas extends PureComponent {
   }
 
   componentDidMount() {
+    // Make the image a square, based on the largest dimension (either
+    // full-width or full-height)
+    const size = Math.min(window.innerWidth, window.innerHeight);
+
+    this.canvas.width = size;
+    this.canvas.height = size;
+
+    this.pixelRatio = getPixelRatio(this.ctx);
+
     this.ctx.imageSmoothingEnabled = false;
 
-    this.initialize();
+    scaleCanvas(this.canvas, this.ctx);
+
+    if (this.props.image) {
+      this.updateImage(this.props.image);
+      this.props.applyTransformation(this.canvas);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -46,23 +60,6 @@ class Canvas extends PureComponent {
 
     if (newTransformationReceived) {
       this.updateImage(nextProps.canvas);
-    }
-  }
-
-  initialize = () => {
-    // Make the image a square, based on the largest dimension (either
-    // full-width or full-height)
-    const size = Math.min(window.innerWidth, window.innerHeight);
-
-    this.canvas.width = size;
-    this.canvas.height = size;
-
-    this.pixelRatio = getPixelRatio(this.ctx);
-
-    scaleCanvas(this.canvas, this.ctx);
-
-    if (this.props.image) {
-      this.updateImage(this.props.image);
     }
   }
 
