@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
@@ -14,6 +15,13 @@ import {
 
 
 class Main extends Component {
+  componentDidMount() {
+    // If we've navigated to this page without an image loaded,
+    // redirect to the intro page (likely the user refreshed).
+    if (!this.props.image) {
+      this.props.history.replace('/');
+    }
+  }
   renderPortrait() {
     return (
       <PortraitOnly style={{ height: '100%' }}>
@@ -51,4 +59,8 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapStateToProps = state => ({
+  image: state.image,
+});
+
+export default connect(mapStateToProps)(Main);

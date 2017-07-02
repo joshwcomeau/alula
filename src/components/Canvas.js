@@ -210,6 +210,12 @@ class Canvas extends PureComponent {
   }
 
   storeRefToCanvas = (canvas) => {
+    // If the component unmounts before the ref can be stored,
+    // bail early.
+    if (!canvas) {
+      return;
+    }
+
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
   }
