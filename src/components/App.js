@@ -17,24 +17,6 @@ const history = createHistory();
 const store = configureStore(history);
 
 class App extends Component {
-  componentDidMount() {
-    // // TEMP TEMP TEMP
-    // // This is just to make life easier while developing.
-    // const DEFAULT_IMAGE_SRC = require('../assets/colors.jpg');
-    // const {receiveNewImage} = require('../actions');
-    // const {loadImage} = require('../utils/image.utils.js');
-    //
-    // const {push} = require('react-router-redux');
-    //
-    // loadImage(DEFAULT_IMAGE_SRC).then((image) => {
-    //   store.dispatch(receiveNewImage(image));
-    //   store.dispatch(push('/create'));
-    // }).catch(console.error);
-    // // END TEMP TEMP TEMP
-    console.log('Fetching!');
-    fetch('/random-photo').then(res => res.json()).then(json => console.log(json))
-  }
-
   render() {
     return (
       <Provider store={store}>

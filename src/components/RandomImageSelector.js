@@ -31,11 +31,8 @@ class RandomImageSelector extends PureComponent {
   }
 
   loadRandomImage = () => {
-    const dimensions = `${this.size}x${this.size}`;
-    const rnd = String(Math.random()).slice(2);
-    const url = `https://source.unsplash.com/random/${dimensions}?v=${rnd}`;
-
-    console.log(url)
+    const date = new Date();
+    const url = `/random-photo?size=${this.size}&d=${date}`;
 
     this.loadPromise = loadImage(url).then(image => {
       this.image = image;
