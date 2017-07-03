@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import SaveIcon from 'react-icons/lib/md/save';
 
-import {openModal} from '../actions';
+import {clickDownloadButton} from '../actions';
 import {colors, styles} from '../constants';
 import {getCurrentCanvas} from '../reducers/history.reducer';
 
@@ -12,14 +12,14 @@ import {IconAdjustment} from './utility-components';
 
 class DownloadButton extends PureComponent {
   render() {
-    const {width, openModal} = this.props;
+    const {width, clickDownloadButton} = this.props;
 
     return (
       <Button
         color={colors.greens[2]}
         borderColor={colors.greens[3]}
         width={width}
-        onClick={() => openModal('download')}
+        onClick={clickDownloadButton}
       >
         <IconAdjustment>
           <SaveIcon />
@@ -33,6 +33,6 @@ const mapStateToProps = state => ({
   canvas: getCurrentCanvas(state),
 });
 
-const mapDispatchToProps = {openModal};
+const mapDispatchToProps = {clickDownloadButton};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DownloadButton);

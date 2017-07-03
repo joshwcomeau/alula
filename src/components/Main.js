@@ -35,6 +35,7 @@ class Main extends Component {
           <Canvas />
           <BottomControls />
         </PortraitColumn>
+        <DownloadModal />
       </PortraitOnly>
     )
   }
@@ -66,7 +67,6 @@ class Main extends Component {
       <Wrapper>
         {this.renderPortrait()}
         {this.renderLandscape()}
-        <DownloadModal />
       </Wrapper>
     );
   }

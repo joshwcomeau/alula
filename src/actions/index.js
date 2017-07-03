@@ -7,7 +7,7 @@ export const CLEAR_IMAGE = 'CLEAR_IMAGE';
 export const APPLY_TRANSFORMATION = 'APPLY_TRANSFORMATION';
 export const UNDO_TRANSFORMATION = 'UNDO_TRANSFORMATION';
 export const RESTORE_ORIGINAL_IMAGE = 'RESTORE_ORIGINAL_IMAGE';
-export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLICK_DOWNLOAD_BUTTON = 'CLICK_DOWNLOAD_BUTTON';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const ROTATE = 'ROTATE';
 
@@ -36,9 +36,8 @@ export const restoreOriginalImage = () => ({
   type: RESTORE_ORIGINAL_IMAGE,
 });
 
-export const openModal = modal => ({
-  type: OPEN_MODAL,
-  modal,
+export const clickDownloadButton = () => ({
+  type: CLICK_DOWNLOAD_BUTTON,
 });
 
 export const closeModal = () => ({
