@@ -99,6 +99,11 @@ class Canvas extends PureComponent {
   startDrag = (ev) => {
     disableEventOnMobile(ev);
 
+    // Ignore right-clicks, on desktop
+    if (ev.button === 2) {
+      return;
+    }
+
     const {x: x1, y: y1} = this.getEventCoords(ev);
     this.x1 = x1;
     this.y1 = y1;

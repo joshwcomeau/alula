@@ -44,7 +44,6 @@ class Main extends Component {
     return (
       <LandscapeOnly>
         <Row>
-          <Canvas />
           <Column style={{ flex: 1 }}>
             <TopControls />
             <LandscapeAdditionalContent>
@@ -53,10 +52,14 @@ class Main extends Component {
                 <LandscapeParagraph>
                   Mirror the photo by clicking and dragging a line with your mouse.
                 </LandscapeParagraph>
+                <LandscapeParagraph>
+                  Right-click and "Save as" to save your work :)
+                </LandscapeParagraph>
               </span>
             </LandscapeAdditionalContent>
             <BottomControls />
           </Column>
+          <Canvas />
         </Row>
       </LandscapeOnly>
     )
@@ -101,6 +104,7 @@ const LandscapeHeading = styled.h2`
 const LandscapeParagraph = styled.p`
   max-width: 400px;
   line-height: 1.4;
+  margin-bottom: ${styles.paddingUnitPx};
 `;
 
 const mapStateToProps = state => ({
