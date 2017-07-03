@@ -55,6 +55,7 @@ const TopBar = styled.div`
   height: ${styles.barHeightPx};
   padding: 0 ${styles.paddingUnitPx};
   background: ${styles.backgroundColor};
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 
   ${media.xs`
     height: ${styles.barHeightXSPx};

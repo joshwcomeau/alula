@@ -16,28 +16,45 @@ class Intro extends Component {
 
   render() {
     return (
-      <IntroElem>
-        <Title>Aztec</Title>
-        <Subtitle>Art via reflection</Subtitle>
+      <Background>
+        <Wrapper>
+          <span>
+            <Title>Aztec</Title>
+            <Subtitle>Art via reflection</Subtitle>
+          </span>
 
-        <Container>
-          <DemoGIF src={demoGIFUrl} />
-        </Container>
+          <Container>
+            <DemoGIF src={demoGIFUrl} />
+          </Container>
 
-        <ButtonContainer>
-          <ImageUploader />
-          <RandomImageSelector />
-        </ButtonContainer>
-      </IntroElem>
-    )
+          <ButtonContainer>
+            <ImageUploader />
+            <RandomImageSelector />
+          </ButtonContainer>
+
+          <Footer>
+            © 2017-present. A thing by
+            {' '}
+            <Link href="https://github.com/joshwcomeau">Joshua Comeau</Link>.
+          </Footer>
+        </Wrapper>
+      </Background>
+    );
   }
 }
 
-const IntroElem = styled.div`
+const Background = styled.div`
   height: 100%;
+  background-color: ${colors.grays[4]};
+`
+
+const Wrapper = styled.div`
+  height: 100%;
+  max-width: 450px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  background-color: ${colors.grays[4]};
+  justify-content: space-between;
   text-align: center;
   color: ${colors.grays[0]};
 `
@@ -60,7 +77,8 @@ const Subtitle = styled.h3`
 
 const Container = styled.div`
   width: 80%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const ButtonContainer = Container.extend`
@@ -73,6 +91,18 @@ const DemoGIF = styled.img`
   width: 100%;
   max-height: 40%;
   border-radius: 2px;
-`
+`;
+
+const Footer = styled.footer`
+  margin: ${styles.paddingUnitPx};
+  font-size: 12px;
+  color: ${colors.white}
+`;
+
+const Link = styled.a`
+  font-weight: bold;
+  text-decoration: none;
+  color: ${colors.blues[1]};
+`;
 
 export default Intro;

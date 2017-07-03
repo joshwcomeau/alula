@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import styled from 'styled-components';
+
+import {colors, styles} from '../constants';
 
 import TopControls from './TopControls';
 import BottomControls from './BottomControls';
@@ -8,6 +11,7 @@ import DownloadModal from './DownloadModal';
 import {
   Column,
   Row,
+  Flexed,
   FullHeight,
   LandscapeOnly,
   PortraitOnly,
@@ -22,14 +26,15 @@ class Main extends Component {
       this.props.history.replace('/');
     }
   }
+
   renderPortrait() {
     return (
       <PortraitOnly style={{ height: '100%' }}>
-        <Column style={{ minHeight: '100%' }}>
+        <PortraitColumn>
           <TopControls />
           <Canvas />
           <BottomControls />
-        </Column>
+        </PortraitColumn>
       </PortraitOnly>
     )
   }
@@ -41,7 +46,15 @@ class Main extends Component {
           <Canvas />
           <Column style={{ flex: 1 }}>
             <TopControls />
-            <BottomControls style={{ flex: 1 }}/>
+            <LandscapeAdditionalContent>
+              <span>
+                <LandscapeHeading>Make some art.</LandscapeHeading>
+                <LandscapeParagraph>
+                  Mirror the photo by clicking and dragging a line with your mouse.
+                </LandscapeParagraph>
+              </span>
+            </LandscapeAdditionalContent>
+            <BottomControls />
           </Column>
         </Row>
       </LandscapeOnly>
@@ -50,14 +63,45 @@ class Main extends Component {
 
   render() {
     return (
-      <FullHeight>
+      <Wrapper>
         {this.renderPortrait()}
         {this.renderLandscape()}
         <DownloadModal />
-      </FullHeight>
+      </Wrapper>
     );
   }
 }
+
+const Wrapper = FullHeight.extend`
+  background-color: ${colors.grays[5]};
+`;
+
+const PortraitColumn = Column.extend`
+  min-height: 100%;
+  justify-content: space-between;
+`;
+
+const LandscapeAdditionalContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  color: ${colors.white};
+  padding: ${styles.paddingUnit * 2}px;
+`;
+
+const LandscapeHeading = styled.h2`
+  font-size: 24px;
+  margin-bottom: ${styles.paddingUnitPx};
+  color: ${colors.pinks[1]};
+`;
+
+const LandscapeParagraph = styled.p`
+  max-width: 400px;
+  line-height: 1.4;
+`;
 
 const mapStateToProps = state => ({
   image: state.image,

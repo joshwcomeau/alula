@@ -55,6 +55,7 @@ const BaseButtonElem = styled.button`
   font-size: 18px;
   font-weight: 400;
   outline: none;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.5;

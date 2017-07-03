@@ -13,6 +13,10 @@ export const Row = styled.div`
   flex-direction: row;
 `;
 
+export const Flexed = styled.div`
+  flex: 1;
+`;
+
 export const FullHeight = styled.div`
   height: 100%;
 `;

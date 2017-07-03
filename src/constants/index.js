@@ -49,6 +49,7 @@ export const grays = [
   '#9E9E9E',
   '#616161',
   '#212121',
+  '#171717',
 ];
 
 export const white = '#FFFFFF';

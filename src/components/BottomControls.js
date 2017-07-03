@@ -7,7 +7,7 @@ import RotateRightIcon from 'react-icons/lib/md/rotate-right';
 import UndoIcon from 'react-icons/lib/md/undo';
 import RestoreIcon from 'react-icons/lib/md/delete';
 
-import {colors, styles} from '../constants';
+import {colors, media, styles} from '../constants';
 import {getCanUndo} from '../reducers/history.reducer';
 import {
   undoTransformation,
@@ -20,15 +20,15 @@ import Button from './Button';
 import {Row, IconAdjustment} from './utility-components';
 
 
-const Section = styled.div`
+const Wrapper = styled.div`
   position: relative;
   z-index: 2;
   padding: ${styles.paddingUnitPx};
   background: ${styles.backgroundColor};
   color: ${styles.textColor};
-  flex: 1;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.05);
 `;
 
 // const RotateButton = Button.extend`
@@ -79,7 +79,7 @@ class BottomControls extends PureComponent {
     } = this.props;
 
     return (
-      <Section>
+      <Wrapper>
         <Row>
           <Button
             width={styles.buttonHeightPx}
@@ -119,7 +119,7 @@ class BottomControls extends PureComponent {
             <IconAdjustment><UndoIcon /></IconAdjustment>
           </Button>
         </Row>
-      </Section>
+      </Wrapper>
     )
   }
 }

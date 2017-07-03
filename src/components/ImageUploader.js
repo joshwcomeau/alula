@@ -43,18 +43,9 @@ export class ImageUploader extends PureComponent {
 
     return (
       <Container>
-        <input
+        <FileInput
           type="file"
           onChange={ev => this.handleUpload(ev.target.files[0])}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 2,
-            opacity: 0,
-          }}
         />
         <IntroButton
           color={colors.pinks[1]}
@@ -69,6 +60,17 @@ export class ImageUploader extends PureComponent {
     )
   }
 }
+
+const FileInput = styled.input`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  opacity: 0;
+  cursor: pointer;
+`
 
 const Container = styled.div`
   position: relative;
