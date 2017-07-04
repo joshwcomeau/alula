@@ -19,8 +19,8 @@ class Intro extends Component {
       <Background>
         <Wrapper>
           <span>
-            <Title>Aztec</Title>
-            <Subtitle>Art via reflection</Subtitle>
+            <Title>alula</Title>
+            <Subtitle>art via reflection</Subtitle>
           </span>
 
           <Container>

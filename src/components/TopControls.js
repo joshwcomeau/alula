@@ -31,7 +31,7 @@ class TopControls extends PureComponent {
           <IconAdjustment><BackIcon /></IconAdjustment>
         </Button>
 
-        <Title>Aztec</Title>
+        <Title>alula</Title>
 
         <DownloadButton width={styles.buttonHeightPx} />
       </TopBar>
