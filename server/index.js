@@ -6,7 +6,7 @@ const request = require('request');
 
 const app = express();
 
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3004);
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
