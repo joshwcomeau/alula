@@ -67,6 +67,7 @@ const FileInput = styled.input`
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
   z-index: 2;
   opacity: 0;
   cursor: pointer;
