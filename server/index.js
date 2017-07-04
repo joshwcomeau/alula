@@ -1,12 +1,14 @@
 const fs = require('fs');
 
+const nconf = require('nconf');
 const express = require('express');
 const request = require('request');
 
+require('./initialize');
 
 const app = express();
 
-app.set('port', process.env.PORT || 3004);
+app.set('port', nconf.get('PORT'));
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -20,6 +22,10 @@ app.get('/random-photo', (req, res) => {
   request(url).pipe(res);
 });
 
+app.post('/save', (req, res) => {
+
+});
+
 app.listen(app.get('port'), () => {
-  console.info(`Listening: http://localhost:${app.get('port')}/`);
+  console.info(`==> 🌎  Listening on port ${app.get('port')}.`);
 });

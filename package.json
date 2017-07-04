@@ -7,6 +7,8 @@
     "express": "^4.15.3",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "nconf": "^0.8.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-addons-perf": "^15.4.2",
@@ -22,21 +24,25 @@
     "redux-devtools-dock-monitor": "^1.1.2",
     "redux-devtools-log-monitor": "^1.3.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
     "styled-components": "^2.1.0",
     "three": "0.80",
     "unfetch": "^3.0.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",
+    "flightplan": "^0.6.17",
     "react-scripts": "1.0.7"
   },
   "scripts": {
     "start": "concurrently \"yarn start:client\" \"yarn start:server\"",
     "start:client": "react-scripts start",
-    "start:server": "nodemon server.js",
+    "start:server": "nodemon server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && surge -p build -d aztec.surge.sh"
+    "deploy": "NODE_ENV=production fly deploy:production --fresh-dependencies",
+    "deploy:no-build": "yarn deploy -- --skip-build",
+    "restart:server": "fly restart:production"
   }
 }
