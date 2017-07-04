@@ -29,6 +29,19 @@ const linkedDirectory   = `${projectDir}/current`;
 
 const MAX_SAVED_DEPLOYS = 3;
 
+const restartApplication = remote => {
+  // Start/Restart the application
+  // First, figure out if the app is already running
+  let appDetails = remote.exec(`pm2 show ${appName}`, {failsafe: true});
+  let alreadyRunning = !appDetails.stderr;
+
+  if (alreadyRunning) {
+    remote.exec(`pm2 delete ${appName}`);
+  }
+
+  remote.exec(`pm2 start ${linkedDirectory}/server --name="${appName}"`);
+}
+
 plan.target('production', {
   host:       nconf.get('SERVER_HOST'),
   username:   nconf.get('SERVER_USER'),
@@ -75,37 +88,10 @@ plan.remote( 'deploy', remote => {
   remote.log('Creating symlink');
   remote.sudo(`ln -snf ${newDirectory} ${linkedDirectory}`, { user });
 
-  // Start/Restart the application
-  // First, figure out if the app is already running
-  let appDetails = remote.exec(`pm2 show ${appName}`, {failsafe: true});
-  let appNotRunning = !!appDetails.stderr;
-
-  // TODO: PM2 isn't working on the server, and I'm too lazy to fix it.
-
-  if ( appNotRunning ) {
-    remote.log("App is not already running. Starting it fresh")
-    remote.exec(`pm2 start ${linkedDirectory}/server --name="${appName}"`)
-  } else {
-    remote.log("Restarting app")
-    remote.exec(`pm2 restart ${appName}`)
-  }
+  restartApplication(remote);
 
   remote.log('Removing oldest copies of deploy');
   remote.exec(`cd ${projectDir} && rm -rf \`ls -td ${appName}_* | awk 'NR>${MAX_SAVED_DEPLOYS}'\``);
-
 });
 
-plan.remote('restart', remote => {
-  // Start/Restart the application
-  // First, figure out if the app is already running
-  let appDetails = remote.exec(`pm2 show ${appName}`, {failsafe: true});
-  let appNotRunning = !!appDetails.stderr;
-
-  if ( appNotRunning ) {
-    remote.log("App is not already running. Starting it fresh")
-    remote.exec(`pm2 start ${linkedDirectory}/server --name="${appName}"`)
-  } else {
-    remote.log("Restarting app")
-    remote.exec(`pm2 restart ${appName}`)
-  }
-});
+plan.remote('restart', restartApplication);
