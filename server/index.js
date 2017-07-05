@@ -8,7 +8,7 @@ require('./initialize');
 
 const app = express();
 
-app.set('port', nconf.get('PORT'));
+app.set('port', nconf.get('PORT') || 3004);
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
