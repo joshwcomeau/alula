@@ -26,6 +26,12 @@ app.post('/save', (req, res) => {
 
 });
 
+// Redirect /create to the homepage, in case people refresh while
+// working on something.
+app.get('/create', (req, res) => {
+  res.redirect('/');
+});
+
 app.listen(app.get('port'), () => {
   console.info(`==> 🌎  Listening on port ${app.get('port')}.`);
 });
