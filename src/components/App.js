@@ -17,6 +17,17 @@ const history = createHistory();
 const store = configureStore(history);
 
 class App extends Component {
+  componentDidMount() {
+    // On some mobile devices, tapping twice causes a zoom-in.
+    // We want to disable this, as it's super annoying when trying to undo
+    // multiple steps.
+    document.addEventListener('touchend', event => {
+      // Make sure that tap events don't bubble up to the window.
+      event.stopPropagation();
+    });
+  }
+
+
   render() {
     return (
       <Provider store={store}>

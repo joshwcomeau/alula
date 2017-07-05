@@ -31,30 +31,6 @@ const Wrapper = styled.div`
   border-top: 1px solid rgba(255,255,255,0.05);
 `;
 
-// const RotateButton = Button.extend`
-//   margin-left: ${styles.paddingUnitPx};
-//   width: ${styles.buttonHeightPx};
-//   height: ${styles.buttonHeightPx};
-//   color: ${colors.pinks[1]};
-//   border-color: ${colors.pinks[2]};
-//   font-size: 22px;
-// `;
-//
-// const UndoButton = Button.extend`
-//   height: ${styles.buttonHeightPx};
-//   color: ${colors.purples[1]};
-//   border-color: ${colors.purples[2]};
-//   margin-left: ${styles.paddingUnitPx};
-//   flex: 1;
-// `;
-//
-// const RestoreButton = Button.extend`
-//   height: ${styles.buttonHeightPx};
-//   width: ${styles.buttonHeightPx};
-//   color: ${colors.reds[2]};
-//   border-color: ${colors.reds[3]};
-// `;
-
 class BottomControls extends PureComponent {
   static propTypes = {
     canUndo: PropTypes.bool.isRequired,
