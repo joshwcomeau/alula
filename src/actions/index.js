@@ -8,6 +8,7 @@ export const APPLY_TRANSFORMATION = 'APPLY_TRANSFORMATION';
 export const UNDO_TRANSFORMATION = 'UNDO_TRANSFORMATION';
 export const RESTORE_ORIGINAL_IMAGE = 'RESTORE_ORIGINAL_IMAGE';
 export const CLICK_DOWNLOAD_BUTTON = 'CLICK_DOWNLOAD_BUTTON';
+export const RIGHT_CLICK_CANVAS = 'RIGHT_CLICK_CANVAS';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const ROTATE = 'ROTATE';
 
@@ -38,6 +39,10 @@ export const restoreOriginalImage = () => ({
 
 export const clickDownloadButton = () => ({
   type: CLICK_DOWNLOAD_BUTTON,
+});
+
+export const rightClickCanvas = () => ({
+  type: RIGHT_CLICK_CANVAS,
 });
 
 export const closeModal = () => ({

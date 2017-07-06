@@ -4,6 +4,7 @@ import { routerMiddleware } from 'react-router-redux'
 import Perf from 'react-addons-perf';
 
 import rootReducer from '../reducers';
+import uploadMiddleware from '../middlewares/upload.middleware';
 import DevTools from '../components/DevTools';
 
 
@@ -13,7 +14,7 @@ export default function configureStore(history) {
   const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(routerMiddleware(history), thunk),
+      applyMiddleware(routerMiddleware(history), thunk, uploadMiddleware),
       DevTools.instrument()
     )
   );

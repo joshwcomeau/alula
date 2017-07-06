@@ -3,7 +3,11 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {applyTransformation, undoTransformation} from '../actions';
+import {
+  applyTransformation,
+  undoTransformation,
+  rightClickCanvas,
+} from '../actions';
 import {getCurrentCanvas} from '../reducers/history.reducer';
 import {disableEventOnMobile} from '../utils/event.utils';
 import {
@@ -99,8 +103,11 @@ class Canvas extends PureComponent {
   startDrag = (ev) => {
     disableEventOnMobile(ev);
 
-    // Ignore right-clicks, on desktop
+    // If the user right-clicks, we don't want to do any mirroring.
+    // We _do_ want to signal this intent, though, since there's a good
+    // chance it means they're done and are saving the image.
     if (ev.button === 2) {
+      this.props.rightClickCanvas();
       return;
     }
 
@@ -245,6 +252,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   applyTransformation,
   undoTransformation,
+  rightClickCanvas,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

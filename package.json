@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3004/",
   "dependencies": {
+    "aws-sdk": "^2.81.0",
     "express": "^4.15.3",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
